@@ -6,16 +6,373 @@
   <title>CarbonClarity 2025 — Save Our Only Home</title>
   <meta name="description" content="The most accurate & emotional carbon footprint calculator on Earth." />
   <link rel="icon" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEglYezDr38PQIqu1wKJB6PWf3w4W8h7Tfri30UqTNbHygp7YLCjiw2ikmlDel8IYMGaKl5ZlYXzm_YLQZVxuQPNz57dKbXTuz00wAX4NNs1xs5ERzKoIxjdwzjgAScjSg-GX-VnnQrNf3dhvr0J2HKHtyqB8HlQbLfSsvt7cGh1-lf8pspR8IEjzHIPnye_/s192/android-chrome-192x192.png" type="image/x-icon"/>
-
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@800;900&family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@800;900&family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"/>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
-    /* Existing CSS from previous response including upgraded header and footer styles */
-    /* ... (paste all previous CSS here, exactly as given) ... */
-    /* For brevity, include all styles from the previous response */
+    *, *::before, *::after {margin:0;padding:0;box-sizing:border-box;}
+    html,body{width:100%;overflow-x:hidden;}
+    body{
+      font-family:'Inter',sans-serif;
+      background:#020617;
+      color:white;
+      scroll-behavior:smooth;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+    body.menu-open{
+      overflow:hidden;
+    }
+
+    section, footer {
+      width:100vw;
+      position:relative;
+      left:50%;
+      right:50%;
+      margin-left:-50vw;
+      margin-right:-50vw;
+    }
+
+    /* HEADER */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      background: linear-gradient(180deg, rgba(2, 6, 23, 0.98), rgba(2, 6, 23, 0.88));
+      backdrop-filter: blur(12px);
+      padding: 1rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(34, 211, 238, 0.12);
+      transition: padding 0.25s ease, box-shadow 0.25s ease, opacity 0.5s ease, backdrop-filter 0.4s ease;
+      opacity: 1;
+    }
+    header.scrolled {
+      padding: 0.6rem 5%;
+      box-shadow: 0 8px 30px rgba(34, 211, 238, 0.8);
+      opacity: 0.95;
+      backdrop-filter: blur(18px);
+    }
+
+    .logo{
+      font-family:'Orbitron',sans-serif;
+      font-size:2.1rem;
+      font-weight:900;
+      background:linear-gradient(90deg,#22d3ee,#86efac);
+      -webkit-background-clip:text;
+      background-clip:text;
+      -webkit-text-fill-color:transparent;
+      letter-spacing:0.06em;
+      display:flex;
+      align-items:center;
+      gap:0.6rem;
+    }
+    .logo .dot {
+      width:12px;height:12px;border-radius:999px;
+      background:radial-gradient(circle,#86efac,#22d3ee);
+      box-shadow:0 6px 20px rgba(34,211,238,0.3);
+    }
+    .nav-links a{
+      color:#e2e8f0;
+      font-weight:700;
+      padding:0.55rem 1.1rem;
+      border-radius:999px;
+      transition:all .25s;
+      font-size:1rem;
+      white-space:nowrap;
+      display:inline-block;
+    }
+    .nav-links a:hover, .nav-links a:focus{
+      background:rgba(34,211,238,0.08);
+      color:#22d3ee;
+      outline:none;
+      transform:translateY(-2px);
+    }
+    .burger{
+      display:none;
+      color:#22d3ee;
+      font-size:1.9rem;
+      cursor:pointer;
+      background:transparent;
+      border:none;
+    }
+    .burger:focus{outline:2px dashed #22d3ee; outline-offset:3px;}
+
+    .mobile-menu{
+      position:fixed;
+      top:70px;
+      left:0;
+      right:0;
+      background:linear-gradient(180deg, rgba(2,6,23,0.995), rgba(2,6,23,0.98));
+      backdrop-filter:blur(25px);
+      padding:2rem 5%;
+      display:none;
+      flex-direction:column;
+      gap:1.6rem;
+      font-size:1.4rem;
+      text-align:center;
+      z-index:999;
+      border-bottom:4px solid #22d3ee;
+      box-shadow:0 20px 40px rgba(0,0,0,0.85);
+      transition:all .25s ease;
+    }
+    .mobile-menu a{
+      color:#e2e8f0;
+      font-weight:700;
+      padding:0.9rem 0.6rem;
+      border-radius:999px;
+    }
+    .mobile-menu a:hover{background:rgba(34,211,238,0.06); color:#22d3ee;}
+    .mobile-menu.active{display:flex;}
+
+    /* HERO */
+    .hero{
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      text-align:center;
+      padding:8.5rem 5% 5rem;
+      background:radial-gradient(circle at 20% 80%,#071025,#020617);
+    }
+    .hero h1{
+      font-size:clamp(3.2rem,12vw,11rem);
+      font-weight:900;
+      line-height:0.95;
+      letter-spacing:-5px;
+      background:linear-gradient(90deg,#22d3ee,#67e8f9,#86efac,#c084fc);
+      -webkit-background-clip:text;
+      background-clip:text;
+      -webkit-text-fill-color:transparent;
+      text-shadow:0 0 120px rgba(34,211,238,0.9);
+      margin-bottom:0.8rem;
+    }
+    .hero-sub{
+      margin-top:0.8rem;
+      font-size:clamp(1.1rem,2.2vw,1.6rem);
+      color:#a5f3fc;
+      font-weight:600;
+      max-width:48rem;
+      line-height:1.4;
+    }
+    .hero-tag{
+      margin-top:1.6rem;
+      font-size:clamp(1rem,2.6vw,1.4rem);
+      color:#cbd5f5;
+      max-width:44rem;
+      line-height:1.5;
+    }
+    .glow-line{
+      height:10px;
+      background:linear-gradient(90deg,transparent,#22d3ee,#4ade80,transparent);
+      width:90%;
+      max-width:900px;
+      margin:2.6rem auto;
+      border-radius:20px;
+      box-shadow:0 0 90px #22d3ee;
+      animation:flow 6s infinite linear;
+    }
+    @keyframes flow{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+
+    /* CALCULATOR SECTION */
+    .calc-section{
+      padding:6.5rem 5% 6.5rem;
+      background:linear-gradient(135deg,rgba(34,211,238,0.06),rgba(74,222,128,0.03));
+    }
+    .calc-card{
+      background:linear-gradient(180deg, rgba(8,20,40,0.86), rgba(12,24,42,0.76));
+      border-radius:3.5rem;
+      padding:4.5rem 5%;
+      max-width:1400px;
+      margin:0 auto;
+      backdrop-filter:blur(14px);
+      box-shadow:0 50px 140px rgba(4,8,20,0.8);
+      border:1px solid rgba(34,211,238,0.04);
+    }
+    .calc-title{
+      font-size:clamp(2rem,4vw,3rem);
+      line-height:1.05;
+      margin-bottom:1.4rem;
+    }
+    .input-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+      gap:1.8rem;
+      margin-top:1.8rem;
+    }
+    .input-grid label{
+      display:block;
+      margin-bottom:0.6rem;
+      font-size:1rem;
+      color:#bdeaf6;
+      font-weight:700;
+    }
+    input[type=number], select {
+      width:100%;
+      background:rgba(6,12,28,0.95);
+      border:2px solid rgba(34,211,238,0.12);
+      border-radius:2rem;
+      padding:0.9rem 1.1rem;
+      font-size:1rem;
+      font-weight:700;
+      color:#a5f3fc;
+      text-align:center;
+      transition:all .22s;
+    }
+    input[type=number]::placeholder{color:rgba(165,243,252,0.35);}
+    input[type=number]:focus, select:focus{
+      outline:none;
+      border-color:#4ade80;
+      transform:translateY(-2px);
+      box-shadow:0 10px 30px rgba(74,222,128,0.06);
+    }
+    .small-note{font-size:0.86rem;color:#9bdbe6;margin-top:0.45rem;}
+
+    .btn{
+      padding:0.95rem 1.8rem;
+      border-radius:2rem;
+      font-size:1.05rem;
+      font-weight:900;
+      background:linear-gradient(90deg,#22d3ee,#4ade80);
+      color:black;
+      box-shadow:0 18px 50px rgba(34,211,238,0.6);
+      transition:all .22s;
+      border:none;
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:0.5rem;
+      text-align:center;
+    }
+    .btn:hover{transform:translateY(-4px); box-shadow:0 28px 80px rgba(74,222,128,0.95);}
+    .btn-alt{
+      background:linear-gradient(90deg,#f97316,#ef4444);
+      box-shadow:0 18px 50px rgba(248,113,113,0.5);
+      color:white;
+    }
+
+    .btn-group{margin-top:1.6rem;}
+    .results-wrapper{
+      margin-top:2.6rem;
+      text-align:center;
+      transition:all .2s;
+    }
+    .results-heading{
+      font-size:clamp(1.2rem,2.4vw,1.8rem);
+      margin-bottom:0.8rem;
+      color:#7ee7d6;
+      font-weight:800;
+    }
+    .total-emission{
+      font-size:clamp(1.6rem,4vw,2.8rem);
+      font-weight:900;
+      color:#6ee7b7;
+      margin:0.8rem 0 1.6rem;
+    }
+    #breakdown{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+      gap:1rem;
+      margin:1.6rem 0 1.8rem;
+    }
+    #breakdown .box{
+      padding:1.1rem 1rem;
+      border-radius:1.6rem;
+      text-align:center;
+      backdrop-filter:blur(6px);
+      border:1px solid rgba(255,255,255,0.03);
+    }
+    #breakdown .box-title{font-size:0.95rem;margin-bottom:0.45rem;color:#dcedf7;}
+    #breakdown .box-value{font-size:1.25rem;font-weight:900;}
+
+    .chart-container{
+      max-width:900px;
+      margin:0 auto;
+      padding:1rem 1rem;
+      min-height:240px;
+    }
+    .chart-container canvas{
+      width:100% !important;
+      height:auto !important;
+      max-height:420px;
+    }
+    #suggestions{
+      margin-top:1.6rem;
+      font-size:1rem;
+      color:#a5f3fc;
+      font-weight:600;
+      min-height:44px;
+    }
+
+    /* Unique Content Section Styling */
+    #content {
+      max-width: 900px;
+      margin: 3rem auto 6rem;
+      padding: 0 1rem;
+      line-height: 1.6;
+      color: #cfeffd;
+    }
+    #content h2 {
+      color: #e0f7fa;
+      margin-bottom: 1rem;
+      font-weight: 900;
+      font-size: 2rem;
+    }
+    #content h3 {
+      color: #dff7ef;
+      margin-top: 1.5rem;
+    }
+    #content ul {
+      margin-left: 1.2rem;
+      list-style-type: disc;
+    }
+
+    /* FOOTER */
+    footer {
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.96), rgba(2, 6, 23, 0.98));
+      padding: 3.5rem 5% 3.2rem;
+      text-align: center;
+      border-top: 2px solid rgba(34, 211, 238, 0.06);
+      transition: opacity 0.6s ease, box-shadow 0.4s ease;
+      opacity: 1;
+      box-shadow: inset 0 0 20px rgba(34, 211, 238, 0.15);
+    }
+
+    footer.scrolled {
+      opacity: 0.9;
+      box-shadow: 0 -8px 30px rgba(34, 211, 238, 0.6);
+    }
+
+    /* small screens */
+    @media (max-width:768px){
+      .burger{display:block !important;}
+      .nav-links{display:none !important;}
+      header{padding:0.8rem 5%;}
+      .logo{font-size:1.5rem;}
+      .hero{padding-top:6.6rem;}
+      .calc-card{padding:2rem 1.6rem;border-radius:1.6rem;}
+      .input-grid{gap:1rem;}
+      input[type=number]{font-size:0.95rem;padding:0.7rem 0.9rem;}
+      .btn{width:100%}
+      .btn-group{display:flex;flex-direction:column;gap:0.7rem;margin-top:1.1rem;}
+      #breakdown{grid-template-columns:repeat(2,minmax(0,1fr));}
+      .chart-container{padding:0.8rem 0.2rem;}
+      #content {margin: 2rem auto 4rem; padding: 0 1rem;}
+    }
+    @media (min-width:1024px){
+      .hero{padding-top:7.5rem;}
+      .calc-card{padding:4.6rem 6%;}
+      .results-wrapper{margin-top:3.6rem;}
+    }
+
+    /* tiny accessible focus */
+    a:focus, button:focus, input:focus {outline: none;}
+    .focus-ring{box-shadow:0 0 0 3px rgba(34,211,238,0.12), 0 6px 30px rgba(2,6,23,0.6);border-radius:8px;}
   </style>
 </head>
 <body>
@@ -53,29 +410,95 @@
 </section>
 
 <section class="calc-section" id="tool" aria-labelledby="toolTitle">
-  <!-- Calculator content from your original code -->
-  <!-- ... -->
+  <div class="calc-card" role="region" aria-label="Carbon footprint calculator">
+    <h2 id="toolTitle" class="calc-title text-center bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent font-black">Know Your Real Impact</h2>
+    <form id="carbonForm" onsubmit="event.preventDefault(); calculateCarbon();" aria-describedby="calcNote">
+      <div class="input-grid">
+        <div>
+          <label for="electricity">Electricity (kWh/month)</label>
+          <input type="number" id="electricity" name="electricity" value="300" min="0" placeholder="e.g. 300" />
+          <div class="small-note" id="calcNote">Tip: Enter your monthly electricity use. We'll annualize it for you.</div>
+        </div>
+        <div>
+          <label for="carKm">Car Travel (km/week)</label>
+          <input type="number" id="carKm" name="carKm" value="150" min="0" placeholder="e.g. 150" />
+        </div>
+        <div>
+          <label for="flights">Short Flights / year</label>
+          <input type="number" id="flights" name="flights" value="2" min="0" placeholder="e.g. 2" />
+        </div>
+        <div>
+          <label for="waste">Waste (kg/week)</label>
+          <input type="number" id="waste" name="waste" value="5" step="0.1" placeholder="e.g. 5" />
+        </div>
+        <div>
+          <label for="meatMeals">Meat Meals / week</label>
+          <input type="number" id="meatMeals" name="meatMeals" value="7" min="0" max="21" placeholder="e.g. 7" />
+        </div>
+      </div>
+      <div class="text-center btn-group md:space-x-6 md:flex md:justify-center md:items-center md:mt-6">
+        <button type="submit" class="btn" aria-label="Calculate my carbon impact">
+          <i class="fas fa-calculator"></i> Calculate My Impact
+        </button>
+        <button type="button" onclick="resetForm()" class="btn btn-alt" aria-label="Reset form">
+          <i class="fas fa-undo"></i> Reset
+        </button>
+      </div>
+    </form>
+    <div id="results" class="results-wrapper hidden" aria-live="polite" aria-atomic="true">
+      <h2 class="results-heading">Your Annual Footprint</h2>
+      <div id="totalEmission" class="total-emission">0.00 tons CO₂e</div>
+      <div id="breakdown" aria-hidden="false"></div>
+      <div class="chart-container" aria-hidden="false">
+        <canvas id="barChart" role="img" aria-label="Bar chart of emissions by category"></canvas>
+      </div>
+      <div class="chart-container" aria-hidden="false">
+        <canvas id="pieChart" role="img" aria-label="Donut chart of emissions share by category"></canvas>
+      </div>
+      <div id="suggestions" class="text-left"></div>
+    </div>
+  </div>
 </section>
 
-<!-- Content and FAQ sections same as original (omitted here for brevity) -->
+<!-- Your unique content integrated below -->
+<section id="content" aria-labelledby="contentTitle">
+  <h2 id="contentTitle">About this Calculator — Simple, Honest, Actionable</h2>
+  <p>CarbonClarity was built because numbers matter — and stories move people. This calculator turns everyday habits into a single, comprehensible number: the annual carbon footprint of an individual. That number tells a story about energy, transport, food, and waste — but more importantly it shows where practical change can happen.</p>
+  <h3>How it works — transparent assumptions</h3>
+  <p>We use clear emission factors for common activities: electricity use (kWh), car travel (km), short flights (per flight), household waste (kg/week), and frequency of meat-based meals. Monthly or weekly inputs are annualized to produce a yearly footprint in metric tonnes CO₂ equivalent (t CO₂e). Each emission factor is documented, simple, and intentionally conservative: our goal is to be useful, not alarmist.</p>
+  <h3>Why these categories?</h3>
+  <p>Electricity, transport, food, and waste are the easiest parts of daily life to measure and the areas where individual choices scale. Electricity ties to the grid mix (fossil/renewable), transport reflects fuel use and distance, and diet captures a surprisingly large share of many people’s footprint. Waste and recycling close the loop: less waste means fewer emissions from landfills and incineration.</p>
+  <h3>From number to action — clear, prioritized steps</h3>
+  <p>The real power of a footprint is how it helps you decide what to change first. If electricity dominates your number, switching to cleaner energy, installing rooftop solar, or choosing a green electricity supplier offers the biggest impact. If flights are key, consider fewer short-haul trips or take trains where possible. If diet is large, try reducing meat meals gradually: even two fewer meat meals per week scales hugely across a community. Each suggestion is chosen to be realistic and measurable — change one habit at a time and measure again.</p>
+  <h3>Practical examples</h3>
+  <ul>
+    <li>Replacing 300 kWh per month from coal-heavy grid to renewables can reduce a household’s emissions by around 0.5–1.2 t CO₂e per year depending on the grid mix.</li>
+    <li>Switching 5 short car trips a week to walking, cycling, or public transit reduces fuel use and improves local air quality.</li>
+    <li>Replacing four meat meals a week with plant-based alternatives can save 0.2–0.6 t CO₂e annually for many diets.</li>
+  </ul>
+  <h3>Community and systems — individual change drives policy</h3>
+  <p>Individual choices are the seeds that grow into stronger policy and better products. When millions of people choose cleaner energy, governments and utilities respond by accelerating renewables. When consumers demand low-carbon food and low-carbon transport, markets follow. CarbonClarity is designed to be shared: show friends your results, join local green groups, or use the data to ask local leaders for better transit and renewable energy.</p>
+  <h3>Data, transparency & trust</h3>
+  <p>We believe transparency builds trust. Emission factors are simple averages rooted in commonly used factors from international databases. This tool is not a scientific audit — it is an educational and directional calculator to help people make better daily choices. For precise carbon accounting (for companies, large homes, or complex lifestyles) professional lifecycle or inventory tools should be used.</p>
+  <h3>Privacy & ethics</h3>
+  <p>CarbonClarity intentionally keeps data local in the browser. No user data is uploaded unless you choose to share it. The inputs you enter are private and are used only in your own browser session. If you want to save or compare results across time, export or save the numbers locally on your device.</p>
+  <h3>Accessibility and inclusion</h3>
+  <p>This site is designed to be accessible: clear contrast, keyboard-navigable controls, and simple language. If you or your community need translations, printable summaries, or local adaptation, please reach out — sustainable action must be inclusive.</p>
+  <h3>Next steps — from awareness to impact</h3>
+  <p>1. Calculate your baseline. 2. Pick one high-impact action and commit to it for one month. 3. Recalculate and measure the change. 4. Share your results — collective action scales. Consider household-level changes (solar, efficient appliances), transport choices (EVs, rideshare, transit), and food swaps (plant-forward meals). Start small, scale deliberately.</p>
+  <h3>Final thought</h3>
+  <p>Humanity can build a future where people and planet thrive together. That future starts with choices — the ones you make today in your home, on your commute, and at your table. CarbonClarity gives you the clarity to make those choices with purpose.</p>
+</section>
+
+<!-- FAQ Section and rest of your content go below (not duplicated here for brevity) -->
 
 <footer>
-  <h3 class="footer-title bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent font-bold">
-    CarbonClarity
-  </h3>
+  <h3 class="footer-title bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent font-bold">CarbonClarity</h3>
   <div class="footer-icons" role="navigation" aria-label="Social links">
-    <a href="https://x.com/Mukeshkr741" aria-label="Twitter / X">
-      <i class="fab fa-twitter"></i>
-    </a>
-    <a href="https://instagram.com/techinsight1x" aria-label="Instagram">
-      <i class="fab fa-instagram"></i>
-    </a>
-    <a href="https://linkedin.com/in/mukesh-kumar-malakar" aria-label="LinkedIn">
-      <i class="fab fa-linkedin"></i>
-    </a>
-    <a href="https://youtube.com/@techinsightsx" aria-label="YouTube">
-      <i class="fab fa-youtube"></i>
-    </a>
+    <a href="https://x.com/Mukeshkr741" aria-label="Twitter / X"><i class="fab fa-twitter"></i></a>
+    <a href="https://instagram.com/techinsight1x" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+    <a href="https://linkedin.com/in/mukesh-kumar-malakar" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+    <a href="https://youtube.com/@techinsightsx" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
   </div>
   <div class="footer-links">
     <a href="terms.html">Terms of Service</a> •
@@ -88,7 +511,7 @@
 </footer>
 
 <script>
-  // Smooth scroll for in-page links (with mobile menu close)
+  // Smooth scroll for in-page links + Mobile menu toggle + Header/footer fade on scroll
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
       const targetId = this.getAttribute('href');
@@ -108,7 +531,6 @@
     });
   });
 
-  // Mobile menu toggle with aria
   const burger = document.querySelector('.burger');
   const mobileMenu = document.getElementById('mobileMenu');
   burger.addEventListener('click', () => {
@@ -116,18 +538,13 @@
     document.body.classList.toggle('menu-open');
     burger.setAttribute('aria-expanded', open ? 'true' : 'false');
     mobileMenu.setAttribute('aria-hidden', open ? 'false' : 'true');
-    if (open) {
-      mobileMenu.querySelector('a')?.focus();
-    }
+    if (open) mobileMenu.querySelector('a')?.focus();
   });
 
-  // Fade in/out animation on scroll for header and footer
   window.addEventListener('scroll', () => {
     const header = document.getElementById('siteHeader');
     const footer = document.querySelector('footer');
-    const scrollY = window.scrollY;
-
-    if (scrollY > 40) {
+    if (window.scrollY > 40) {
       header.classList.add('scrolled');
       footer.classList.add('scrolled');
     } else {
@@ -147,7 +564,6 @@
 
   let barChart, pieChart;
 
-  // Carbon footprint calculator function
   function calculateCarbon() {
     const e  = +document.getElementById('electricity').value || 0;
     const c  = +document.getElementById('carKm').value || 0;
@@ -165,26 +581,11 @@
     document.getElementById('totalEmission').textContent = total.toFixed(2) + " tons CO₂e";
 
     document.getElementById('breakdown').innerHTML = `
-      <div class="box bg-cyan-900/5">
-        <p class="box-title">Electricity</p>
-        <p class="box-value text-cyan-300 font-black">${elec.toFixed(2)} t</p>
-      </div>
-      <div class="box bg-blue-900/5">
-        <p class="box-title">Car</p>
-        <p class="box-value text-blue-300 font-black">${car.toFixed(2)} t</p>
-      </div>
-      <div class="box bg-yellow-900/5">
-        <p class="box-title">Flights</p>
-        <p class="box-value text-yellow-300 font-black">${flight.toFixed(2)} t</p>
-      </div>
-      <div class="box bg-red-900/5">
-        <p class="box-title">Waste</p>
-        <p class="box-value text-red-300 font-black">${waste.toFixed(2)} t</p>
-      </div>
-      <div class="box bg-purple-900/5">
-        <p class="box-title">Diet</p>
-        <p class="box-value text-purple-300 font-black">${meat.toFixed(2)} t</p>
-      </div>
+      <div class="box bg-cyan-900/5"><p class="box-title">Electricity</p><p class="box-value text-cyan-300 font-black">${elec.toFixed(2)} t</p></div>
+      <div class="box bg-blue-900/5"><p class="box-title">Car</p><p class="box-value text-blue-300 font-black">${car.toFixed(2)} t</p></div>
+      <div class="box bg-yellow-900/5"><p class="box-title">Flights</p><p class="box-value text-yellow-300 font-black">${flight.toFixed(2)} t</p></div>
+      <div class="box bg-red-900/5"><p class="box-title">Waste</p><p class="box-value text-red-300 font-black">${waste.toFixed(2)} t</p></div>
+      <div class="box bg-purple-900/5"><p class="box-title">Diet</p><p class="box-value text-purple-300 font-black">${meat.toFixed(2)} t</p></div>
     `;
 
     const labels = ['Electricity','Car','Flights','Waste','Diet'];
@@ -194,47 +595,25 @@
     if (barChart) barChart.destroy();
     if (pieChart) pieChart.destroy();
 
-    const barCtx = document.getElementById('barChart').getContext('2d');
-    const pieCtx = document.getElementById('pieChart').getContext('2d');
-
-    barChart = new Chart(barCtx, {
+    barChart = new Chart(document.getElementById('barChart').getContext('2d'), {
       type: 'bar',
       data: { labels, datasets: [{ data, backgroundColor: colors, borderRadius: 12 }] },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: { display: false },
-          tooltip: {
-            callbacks: {
-              label: ctx => `${ctx.parsed.y?.toFixed(2) ?? ctx.parsed} t CO₂e`
-            }
-          }
-        },
-        scales: {
-          x: { ticks: { color: '#e5e7eb' }, grid: { display:false } },
-          y: { ticks: { color: '#e5e7eb' }, grid: { color:'rgba(148,163,184,0.08)' } }
-        }
-      }
+      options: {responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}, tooltip:{callbacks:{label:ctx=>`${ctx.parsed.y?.toFixed(2) || ctx.parsed} t CO₂e`}}}, scales:{x:{ticks:{color:'#e5e7eb'}, grid:{display:false}}, y:{ticks:{color:'#e5e7eb'}, grid:{color:'rgba(148,163,184,0.08)'}}}}
     });
 
-    pieChart = new Chart(pieCtx, {
+    pieChart = new Chart(document.getElementById('pieChart').getContext('2d'), {
       type: 'doughnut',
       data: { labels, datasets: [{ data, backgroundColor: colors, borderWidth:12, borderColor:'#020617' }] },
       options: {
         responsive:true,
         maintainAspectRatio:false,
         plugins:{
-          legend:{ position:'bottom', labels:{ color:'#e5eeb8' }},
-          tooltip:{
-            callbacks:{
-              label: ctx => {
-                const val = ctx.parsed;
-                const percent = total > 0 ? (val / total * 100).toFixed(1) : 0;
-                return `${ctx.label}: ${val.toFixed(2)} t (${percent}%)`;
-              }
-            }
-          }
+          legend:{position:'bottom',labels:{color:'#e5eeb8'}},
+          tooltip:{callbacks:{label:ctx=>{
+            const val=ctx.parsed;
+            const percent= total>0 ? (val/total*100).toFixed(1) : 0;
+            return `${ctx.label}: ${val.toFixed(2)} t (${percent}%)`;
+          }}}
         },
         cutout:'58%'
       }
@@ -249,12 +628,10 @@
       suggestions.textContent = "This footprint is higher than Earth’s safe limit. Start with one bold change this month: install solar, switch to an EV or public transit, or go plant-forward with meals.";
     }
 
-    const resultsEl = document.getElementById('results');
-    resultsEl.classList.remove('hidden');
-    resultsEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    document.getElementById('results').classList.remove('hidden');
+    document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 
-  // Reset the calculator form
   function resetForm() {
     document.getElementById('carbonForm').reset();
     document.getElementById('results').classList.add('hidden');
@@ -265,7 +642,6 @@
     if (pieChart) pieChart.destroy();
   }
 
-  // FAQ toggle logic for accessibility and keyboard support
   function toggleFAQEl(faqQ) {
     const ans = faqQ.nextElementSibling;
     const icon = faqQ.querySelector('i');
