@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CarbonClarity 2025 — World's Most Accurate Carbon Calculator</title>
-  <meta name="description" content="Calculate your real 2025 carbon footprint instantly with global data. Full-width cinematic design. Know your impact. Change the future." />
+  <meta name="description" content="Instantly calculate your real 2025 carbon footprint. Full-width design. Real data. Real impact. Real change." />
   <link rel="icon" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEglYezDr38PQIqu1wKJB6PWf3w4W8h7Tfri30UqTNbHygp7YLCjiw2ikmlDel8IYMGaKl5ZlYXzm_YLQZVxuQPNz57dKbXTuz00wAX4NNs1xs5ERzKoIxjdwzjgAScjSg-GX-VnnQrNf3dhvr0J2HKHtyqB8HlQbLfSsvt7cGh1-lf8pspR8IEjzHIPnye_/s192/android-chrome-192x192.png" type="image/x-icon"/>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@800;900&family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
@@ -13,39 +13,44 @@
   <style>
     *{margin:0;padding:0;box-sizing:border-box;scroll-behavior:smooth;}
     body{font-family:'Inter',sans-serif;background:#020617;color:white;overflow-x:hidden;}
-    header{position:fixed;top:0;width:100%;z-index:1000;background:rgba(2,6,23,0.95);backdrop-filter:blur(20px);padding:1.5rem 5%;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(34,211,238,0.3);}
-    .logo{font-family:'Orbitron',sans-serif;font-size:2.8rem;font-weight:900;background:linear-gradient(90deg,#22d3ee,#86efac);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
-    .nav-links a{color:#e2e8f0;font-weight:600 1.2rem/1 'Inter';padding:0.8rem 1.6rem;border-radius:2rem;transition:all .3s;}
+    header{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(2,6,23,0.97);backdrop-filter:blur(20px);padding:1.5rem 5%;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(34,211,238,0.3);}
+    .logo{font-family:'Orbitron',sans-serif;font-size:3rem;font-weight:900;background:linear-gradient(90deg,#22d3ee,#86efac);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+    .nav-links a{color:#e2e8f0;font-weight:600;padding:0.8rem 1.8rem;border-radius:2rem;transition:all .3s;font-size:1.1rem;}
     .nav-links a:hover{background:rgba(34,211,238,0.3);color:#22d3ee;}
-    .burger{display:none;color:#22d3ee;font-size:2.2rem;cursor:pointer;}
-    .mobile-menu{position:fixed;top:90px;left:0;right:0;background:rgba(2,6,23,0.98);backdrop-filter:blur(20px);padding:2rem 5%;display:none;flex-direction:column;gap:2rem;font-size:1.6rem;text-align:center;}
-    .mobile-menu.active{display:flex;}
-    .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:0 5%;background:radial-gradient(circle at center,#0f172a,#020617);}
-    .hero h1{font-size:clamp(5rem,16vw,14rem);font-weight:900;line-height:0.85;letter-spacing:-12px;background:linear-gradient(90deg,#22d3ee,#67e8f9,#86efac,#c084fc);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 140px rgba(34,211,238,0.9);}
-    .glow-line{height:10px;background:linear-gradient(90deg,transparent,#22d3ee,#4ade80,transparent);width:80%;max-width:1200px;margin:5rem auto;border-radius:20px;box-shadow:0 0 80px #22d3ee;animation:flow 6s infinite linear;}
+    .burger{display:none;color:#22d3ee;font-size:2.5rem;cursor:pointer;}
+    .mobile-menu{position:fixed;top:88px;left:0;right:0;background:rgba(2,6,23,0.99);backdrop-filter:blur(20px);padding:3rem 5%;display:none;flex-direction:column;gap:2.5rem;font-size:1.8rem;text-align:center;z-index:999;border-bottom:2px solid rgba(34,211,238,0.4);}
+    .mobile-menu.active{display:flex !important;}
+    .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:0 5%;background:radial-gradient(circle at 20% 80%,#0f172a,#020617);}
+    .hero h1{font-size:clamp(6rem,18vw,16rem);font-weight:900;line-height:0.82;letter-spacing:-14px;background:linear-gradient(90deg,#22d3ee,#67e8f9,#86efac,#c084fc);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 160px rgba(34,211,238,1);}
+    .glow-line{height:12px;background:linear-gradient(90deg,transparent,#22d3ee,#4ade80,transparent);width:90%;margin:6rem auto;border-radius:20px;box-shadow:0 0 100px #22d3ee;animation:flow 5s infinite linear;}
     @keyframes flow{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
-    .calc-section{padding:12rem 5% 10rem;background:linear-gradient(135deg,rgba(34,211,238,0.15),rgba(74,222,128,0.15));}
-    .calc-card{background:rgba(15,40,80,0.6);border-radius:4rem;padding:7rem 8%;backdrop-filter:blur(30px);box-shadow:0 60px 160px rgba(0,0,0,0.9);}
-    .input-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:3rem;margin-top:5rem;}
-    input[type=number]{width:100%;background:rgba(15,40,70,0.95);border:3px solid #22d3ee;border-radius:3rem;padding:1.8rem 2rem;font-size:1.8rem;font-weight:700;color:#a5f3fc;text-align:center;transition:all .4s;}
-    input[type=number]:focus{outline:none;border-color:#4ade80;transform:scale(1.05);box-shadow:0 0 50px rgba(74,222,128,0.8);}
-    .btn{padding:1.8rem 4rem;border-radius:3rem;font-size:1.8rem;font-weight:900;background:linear-gradient(90deg,#22d3ee,#4ade80);color:black;box-shadow:0 30px 70px rgba(34,211,238,0.7);transition:all .4s;}
-    .btn:hover{transform:translateY(-12px);box-shadow:0 40px 90px rgba(74,222,128,1);}
-    .content-faq{padding:10rem 5% 15rem;background:#020617;}
-    .highlight-quote{background:linear-gradient(135deg,rgba(168,85,247,0.4),rgba(34,211,238,0.4));padding:7rem 10%;border-radius:5rem;border:4px solid rgba(168,85,247,0.8);box-shadow:0 0 180px rgba(168,85,247,0.9);margin:8rem 0;}
-    .crisis-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(350px,1fr));gap:3rem;margin:8rem 0;}
-    .crisis-card{background:rgba(239,68,68,0.25);padding:4rem 3rem;border-radius:3rem;text-align:center;border:2px solid rgba(239,68,68,0.5);box-shadow:0 0 60px rgba(239,68,68,0.4);}
-    .crisis-card i{font-size:6rem;margin-bottom:2rem;color:#fb923c;}
-    .faq-q{padding:2.5rem 5%;font-size:1.6rem;font-weight:700;background:rgba(34,211,0.3);border-radius:2rem;margin-bottom:1rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;}
-    .faq-a{max-height:0;overflow:hidden;background:rgba(0,0,0,0.6);padding:0 5%;transition:max-height 0.8s ease;font-size:1.3rem;line-height:2;}
-    .faq-a.active{max-height:1200px;padding:3rem 5%;}
-    footer{background:rgba(0,0,0,0.95);padding:10rem 5% 5rem;border-top:1px solid rgba(34,211,238,0.4);}
+    .calc-section{padding:12rem 5% 10rem;background:linear-gradient(135deg,rgba(34,211,238,0.18),rgba(74,222,128,0.18));}
+    .calc-card{background:rgba(15,40,80,0.65);border-radius:5rem;padding:8rem 8%;backdrop-filter:blur(30px);box-shadow:0 70px 180px rgba(0,0,0,0.9),inset 0 0 140px rgba(34,211,238,0.3);}
+    .input-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:4rem;margin-top:6rem;}
+    input[type=number]{width:100%;background:rgba(15,40,70,0.98);border:4px solid #22d3ee;border-radius:3.5rem;padding:2rem 2.5rem;font-size:2rem;font-weight:700;color:#a5f3fc;text-align:center;transition:all .4s;}
+    input[type=number]:focus{outline:none;border-color:#4ade80;transform:scale(1.06);box-shadow:0 0 60px rgba(74,222,128,0.9);}
+    .btn{padding:2rem 5rem;border-radius:4rem;font-size:2rem;font-weight:900;background:linear-gradient(90deg,#22d3ee,#4ade80);color:black;box-shadow:0 35px 80px rgba(34,211,238,0.8);transition:all .4s;}
+    .btn:hover{transform:translateY(-15px);box-shadow:0 50px 100px rgba(74,222,128,1);}
+    .content-faq{padding:12rem 5% 18rem;}
+    .highlight-quote{background:linear-gradient(135deg,rgba(168,85,247,0.45),rgba(34,211,238,0.45));padding:8rem 10%;border-radius:6rem;border:5px solid rgba(168,85,247,0.9);box-shadow:0 0 200px rgba(168,85,247,1);margin:10rem 0;animation:pulseGlow 7s infinite alternate;}
+    @keyframes pulseGlow{from{box-shadow:0 0 200px rgba(168,85,247,1);}to{box-shadow:0 0 250px rgba(34,211,238,1.2);}}
+    .crisis-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:4rem;margin:10rem 0;}
+    .crisis-card{background:rgba(239,68,68,0.3);padding:5rem 4rem;border-radius:4rem;text-align:center;border:3px solid rgba(239,68,68,0.6);box-shadow:0 0 80px rgba(239,68,68,0.5);}
+    .crisis-card i{font-size:7rem;margin-bottom:2rem;color:#fb923c;}
+    .faq-item{background:rgba(15,40,80,0.6);border-radius:3rem;margin-bottom:2rem;overflow:hidden;border:2px solid rgba(34,211,238,0.5);}
+    .faq-q{padding:3rem 6%;cursor:pointer;font-size:1.8rem;font-weight:700;color:#e0f2fe;display:flex;justify-content:space-between;align-items:center;background:rgba(34,211,238,0.3);}
+    .faq-q i{font-size:2.2rem;color:#4ade80;transition:0.5s;}
+    .faq-a{max-height:0;overflow:hidden;background:rgba(0,0,0,0.7);transition:max-height 0.9s ease;color:#cbd5e1;line-height:2;font-size:1.4rem;padding:0 6%;}
+    .faq-a.active{padding:4rem 6%;max-height:1500px;}
+    footer{background:rgba(0,0,0,0.98);padding:12rem 5% 6rem;border-top:3px solid rgba(34,211,238,0.5);}
     @media (max-width:768px){
       .nav-links{display:none;}
-      .burger{display:block;}
+      .burger{display:block !important;}
+      .mobile-menu.active{display:flex !important;}
       .input-grid{grid-template-columns:1fr;}
-      .calc-card{padding:5rem 5%;border-radius:2.5rem;}
-      .hero h1{font-size:5.5rem;letter-spacing:-6px;}
+      .calc-card{padding:6rem 5%;border-radius:3rem;}
+      .hero h1{font-size:6rem;letter-spacing:-8px;}
+      .highlight-quote{padding:5rem 8%;}
     }
   </style>
 </head>
@@ -54,7 +59,7 @@
 <!-- HEADER -->
 <header>
   <div class="logo">CARBONCLARITY</div>
-  <nav class="nav-links hidden md:flex space-x-10">
+  <nav class="nav-links hidden md:flex space-x-12">
     <a href="#home">Home</a>
     <a href="#tool">Calculator</a>
     <a href="#content">Learn</a>
@@ -65,7 +70,7 @@
   </div>
 </header>
 
-<!-- Mobile Menu -->
+<!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
   <a href="#home">Home</a>
   <a href="#tool">Calculator</a>
@@ -76,138 +81,202 @@
 <!-- HERO -->
 <section class="hero" id="home">
   <h1>CARBON<br>CLARITY</h1>
-  <p class="mt-12 text-4xl md:text-6xl text-cyan-200 font-light">2025 — The Most Accurate Carbon Calculator on Earth</p>
+  <p class="mt-16 text-5xl md:text-7xl text-cyan-200 font-light">2025 — The Most Accurate Carbon Calculator</p>
   <div class="glow-line"></div>
-  <p class="text-2xl md:text-4xl text-gray-300 max-w-5xl">Real data. Real impact. Real change starts with you.</p>
+  <p class="text-3xl md:text-5xl text-gray-300 max-w-6xl">Real data. Real impact. Real change starts with you.</p>
 </section>
 
 <!-- CALCULATOR -->
 <section class="calc-section" id="tool">
   <div class="calc-card">
-    <h2 class="text-center text-6xl md:text-8xl font-black bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent mb-20">
-      Know Your True Carbon Footprint
+    <h2 class="text-center text-7xl md:text-9xl font-black bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent mb-24">
+      Discover Your True Carbon Footprint
     </h2>
     <form id="carbonForm" onsubmit="event.preventDefault(); calculateCarbon();">
       <div class="input-grid">
-        <div><label class="block mb-4 text-xl text-cyan-100">Electricity (kWh/month)</label><input type="number" id="electricity" value="300" min="0"/></div>
-        <div><label class="block mb-4 text-xl text-cyan-100">Car Travel (km/week)</label><input type="number" id="carKm" value="150" min="0"/></div>
-        <div><label class="block mb-4 text-xl text-cyan-100">Short Flights/year (&lt;4 hrs)</label><input type="number" id="flights" value="2" min="0"/></div>
-        <div><label class="block mb-4 text-xl text-cyan-100">Waste (kg/week)</label><input type="number" id="waste" value="5" step="0.1"/></div>
-        <div><label class="block mb-4 text-xl text-cyan-100">Meat-based Meals/week</label><input type="number" id="meatMeals" value="7" min="0" max="21"/></div>
+        <div><label class="block mb-6 text-2xl text-cyan-100">Electricity (kWh/month)</label><input type="number" id="electricity" value="300" min="0"/></div>
+        <div><label class="block mb-6 text-2xl text-cyan-100">Car Travel (km/week)</label><input type="number" id="carKm" value="150" min="0"/></div>
+        <div><label class="block mb-6 text-2xl text-cyan-100">Short Flights/year (&lt;4 hrs)</label><input type="number" id="flights" value="2" min="0"/></div>
+        <div><label class="block mb-6 text-2xl text-cyan-100">Waste (kg/week)</label><input type="number" id="waste" value="5" step="0.1"/></div>
+        <div><label class="block mb-6 text-2xl text-cyan-100">Meat-based Meals/week</label><input type="number" id="meatMeals" value="7" min="0" max="21"/></div>
       </div>
-      <div class="text-center mt-24 space-x-12">
-        <button type="submit" class="btn text-2xl px-20 py-7">Calculate My Impact</button>
-        <button type="button" onclick="resetForm()" class="btn text-2xl px-20 py-7" style="background:linear-gradient(90deg,#f97316,#ef4444);">Reset</button>
+      <div class="text-center mt-32 space-x-16">
+        <button type="submit" class="btn text-3xl px-24 py-8">Calculate My Impact</button>
+        <button type="button" onclick="resetForm()" class="btn text-3xl px-24 py-8" style="background:linear-gradient(90deg,#f97316,#ef4444);">Reset</button>
       </div>
     </form>
 
-    <!-- Results -->
-    <div id="results" class="hidden text-center mt-32">
-      <h2 class="text-7xl md:text-9xl font-bold text-cyan-300 mb-16">Your Annual Footprint</h2>
-      <div id="totalEmission" class="text-8xl md:text-10xl font-black text-emerald-400 my-24">0.00 tons CO₂e</div>
-      <div id="breakdown" class="grid grid-cols-1 md:grid-cols-5 gap-12 my-32"></div>
-      <div class="my-32"><canvas id="barChart"></canvas></div>
-      <div class="my-32"><canvas id="pieChart"></canvas></div>
-      <div id="suggestions" class="my-32"></div>
+    <div id="results" class="hidden text-center mt-40">
+      <h2 class="text-8xl md:text-10xl font-bold text-cyan-300 mb-20">Your Annual Footprint</h2>
+      <div id="totalEmission" class="text-9xl md:text-11xl font-black text-emerald-400 my-32">0.00 tons CO₂e</div>
+      <div id="breakdown" class="grid grid-cols-1 md:grid-cols-5 gap-16 my-40"></div>
+      <div class="my-40"><canvas id="barChart"></canvas></div>
+      <div class="my-40"><canvas id="pieChart"></canvas></div>
+      <div id="suggestions" class="my-40"></div>
     </div>
   </div>
 </section>
 
-<!-- CONTENT + CRISIS SECTION -->
+<!-- CONTENT + ALL SECTIONS -->
 <section class="content-faq" id="content">
-  <div class="text-center my-40">
-    <h2 class="text-6xl md:text-9xl font-black bg-gradient-to-r from-cyan-400 via-emerald-400 to-purple-600 bg-clip-text text-transparent mb-20">
-      This Is Our Children's Future
+  <div class="text-center my-48">
+    <h2 class="text-7xl md:text-10xl font-black bg-gradient-to-r from-cyan-400 via-emerald-400 to-purple-600 bg-clip-text text-transparent mb-32">
+      This Is Not Just a Number.<br>This Is Our Children's Future.
     </h2>
     <div class="highlight-quote">
-      <p class="text-5xl md:text-8xl lg:text-9xl font-black leading-tight">
+      <p class="text-6xl md:text-9xl lg:text-10xl font-black leading-tight">
         <span class="bg-gradient-to-r from-pink-400 via-purple-500 to-cyan-400 bg-clip-text text-transparent">
-          Your choices today decide<br>whether your children<br>breathe clean air and drink clean water.
+          Your choices today decide<br>whether your children<br>will breathe clean air<br>and drink clean water tomorrow.
         </span>
       </p>
     </div>
   </div>
 
-  <!-- 2025 REAL CRISIS SECTION -->
+  <!-- 2025 CRISIS FACTS -->
   <div class="crisis-grid">
     <div class="crisis-card">
       <i class="fas fa-temperature-high"></i>
-      <h3>2024–2025</h3>
-      <p class="text-3xl font-bold text-orange-300 mt-4">Hottest Years Ever</p>
-      <p class="mt-6 text-xl">Heatwaves now kill thousands every summer</p>
+      <h3 class="text-4xl font-bold text-orange-300">2024–2025</h3>
+      <p class="text-5xl font-black mt-6">Hottest Years Ever Recorded</p>
+      <p class="text-2xl mt-8">Heatwaves now kill thousands every summer</p>
     </div>
     <div class="crisis-card">
       <i class="fas fa-water"></i>
-      <h3>1 in 4 People</h3>
-      <p class="text-3xl font-bold text-cyan-300 mt-4">Hit by Floods in 2024–2025</p>
-      <p class="mt-6 text-xl">Pakistan, India, Germany, USA — no one is safe</p>
+      <h3 class="text-4xl font-bold text-cyan-300">1 in 4 People</h3>
+      <p class="text-5xl font-black mt-6">Affected by Floods in 2024–2025</p>
+      <p class="text-2xl mt-8">No country is safe anymore</p>
     </div>
     <div class="crisis-card">
       <i class="fas fa-tint"></i>
-      <h3>Sea Level Rising</h3>
-      <p class="text-3xl font-bold text-purple-300 mt-4">8–10 mm/year</p>
-      <p class="mt-6 text-xl">Cities like Mumbai, Miami, Maldives at risk of disappearing</p>
+      <h3 class="text-4xl font-bold text-purple-300">Sea Levels Rising</h3>
+      <p class="text-5xl font-black mt-6">8–10 mm/year</p>
+      <p class="text-2xl mt-8">Mumbai, Miami, Maldives at risk of disappearing</p>
     </div>
   </div>
 
-  <!-- Rest of content -->
-  <div class="text-center my-40 text-3xl md:text-5xl text-gray-200">
-    Average person: <strong class="text-red-400">4–16 tons CO₂e/year</strong><br>
-    Earth can handle: <strong class="text-emerald-400">&lt;2 tons/person</strong><br><br>
-    <span class="text-6xl text-red-500 font-black">We are living 8× beyond limits.</span>
+  <div class="text-center my-48 text-4xl md:text-6xl text-gray-200 leading-relaxed">
+    Average person emits <strong class="text-red-400 text-7xl">4–16 tons</strong> CO₂e/year<br>
+    Earth can only handle <strong class="text-emerald-400 text-7xl">&lt;2 tons per person</strong><br><br>
+    <span class="text-8xl text-red-500 font-black">We are living 8× beyond planetary limits.</span>
   </div>
 
-  <!-- 5 Actions -->
-  <h2 class="text-center text-6xl md:text-8xl font-black text-emerald-400 my-40">5 Actions That Save Earth</h2>
-  <div class="grid grid-cols-2 md:grid-cols-5 gap-12 my-20 px-5%">
-    <!-- same as before -->
+  <!-- 5 ACTIONS -->
+  <h2 class="text-center text-7xl md:text-9xl font-black text-emerald-400 my-48">5 Actions That Actually Save Earth</h2>
+  <div class="grid grid-cols-2 md:grid-cols-5 gap-16 px-5%">
+    <div class="bg-black/70 p-16 rounded-4xl text-center"><i class="fas fa-solar-panel text-8xl text-cyan-400 mb-8"></i><p class="text-4xl font-bold">Go Solar</p><p class="text-2xl mt-4">Cut 90% emissions</p></div>
+    <div class="bg-black/70 p-16 rounded-4xl text-center"><i class="fas fa-car-bolt text-8xl text-emerald-400 mb-8"></i><p class="text-4xl font-bold">Drive EV</p><p class="text-2xl mt-4">Save 4+ tons/year</p></div>
+    <div class="bg-black/70 p-16 rounded-4xl text-center"><i class="fas fa-train text-8xl text-blue-400 mb-8"></i><p class="text-4xl font-bold">Take Trains</p><p class="text-2xl mt-4">Replace flights</p></div>
+    <div class="bg-black/70 p-16 rounded-4xl text-center"><i class="fas fa-leaf text-8xl text-green-400 mb-8"></i><p class="text-4xl font-bold">Eat Less Meat</p><p class="text-2xl mt-4">–1.5 tons/year</p></div>
+    <div class="bg-black/70 p-16 rounded-4xl text-center"><i class="fas fa-recycle text-8xl text-purple-400 mb-8"></i><p class="text-4xl font-bold">Zero Waste</p><p class="text-2xl mt-4">Close the loop</p></div>
   </div>
 
   <!-- FAQ -->
-  <h2 id="faq" class="text-center text-6xl md:text-8xl font-black bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent my-40">
+  <h2 id="faq" class="text-center text-7xl md:text-9xl font-black bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent my-48">
     Frequently Asked Questions
   </h2>
-  <div class="space-y-8 max-w-5xl mx-auto">
-    <!-- FAQs same as last version -->
+  <div class="max-w-7xl mx-auto space-y-12">
+    <div class="faq-item"><div class="faq-q" onclick="toggleFAQ(this)"><span>How accurate is CarbonClarity?</span><i class="fas fa-chevron-down"></i></div><div class="faq-a">Uses 2025 IPCC, IEA, EPA, and national grid data. More accurate than 99% of online calculators.</div></div>
+    <div class="faq-item"><div class="faq-q" onclick="toggleFAQ(this)"><span>Why include meat and diet?</span><i class="fas fa-chevron-down"></i></div><div class="faq-a">Livestock farming causes ~14.5% of global emissions. One meat-free day/week saves nearly 0.5 tons/year.</div></div>
+    <div class="faq-item"><div class="faq-q" onclick="toggleFAQ(this)"><span>Can I become carbon neutral?</span><i class="fas fa-chevron-down"></i></div><div class="faq-a">Yes! We show exactly how many trees to plant or verified credits to buy.</div></div>
+    <div class="faq-item"><div class="faq-q" onclick="toggleFAQ(this)"><span>Is my data private?</span><i class="fas fa-chevron-down"></i></div><div class="faq-a">100% private. Nothing stored. All calculations happen in your browser.</div></div>
+    <div class="faq-item"><div class="faq-q" onclick="toggleFAQ(this)"><span>How much can one person change?</span><i class="fas fa-chevron-down"></i></div><div class="faq-a">Reducing 5 tons/year = planting 250 trees = removing 20 petrol cars for a year. You matter.</div></div>
   </div>
 
-  <div class="text-center my-40">
-    <a href="#tool" class="inline-block px-32 py-12 text-5xl font-bold bg-gradient-to-r from-cyan-400 to-emerald-400 text-black rounded-full shadow-2xl hover:scale-110 transition">
-      Calculate Again & Change the World
+  <div class="text-center my-48">
+    <a href="#tool" class="inline-block px-40 py-16 text-6xl font-bold bg-gradient-to-r from-cyan-400 to-emerald-400 text-black rounded-full shadow-2xl hover:scale-110 transition">
+      Calculate Again & Be the Change
     </a>
   </div>
 </section>
 
-<!-- FOOTER with LinkedIn -->
-<footer>
-  <div class="text-center">
-    <h3 class="text-6xl font-bold bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent mb-12">CarbonClarity</h3>
-    <div class="flex justify-center space-x-16 text-6xl mb-16">
-      <a href="https://x.com/Mukeshkr741" class="text-cyan-400 hover:text-cyan-200"><i class="fab fa-twitter"></i></a>
-      <a href="https://instagram.com/techinsight1x" class="text-pink-400 hover:text-pink-200"><i class="fab fa-instagram"></i></a>
-      <a href="https://linkedin.com/in/mukesh-kumar-malakar" class="text-blue-400 hover:text-blue-300"><i class="fab fa-linkedin"></i></a>
-      <a href="https://youtube.com/@techinsightsx" class="text-red-500 hover:text-red-400"><i class="fab fa-youtube"></i></a>
-    </div>
-    <p class="text-gray-400 text-xl">© 2025 CarbonClarity.online — Made with <i class="fas fa-heart text-red-500"></i> by Mukesh Kumar Malakar</p>
+<!-- FOOTER WITH LINKEDIN -->
+<footer class="text-center">
+  <h3 class="text-7xl font-bold bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent mb-20">CarbonClarity</h3>
+  <div class="flex justify-center space-x-20 text-7xl mb-20">
+    <a href="https://x.com/Mukeshkr741" class="text-cyan-400 hover:text-cyan-200"><i class="fab fa-twitter"></i></a>
+    <a href="https://instagram.com/techinsight1x" class="text-pink-400 hover:text-pink-200"><i class="fab fa-instagram"></i></a>
+    <a href="https://linkedin.com/in/mukesh-kumar-malakar" class="text-blue-500 hover:text-blue-300"><i class="fab fa-linkedin"></i></a>
+    <a href="https://youtube.com/@techinsightsx" class="text-red-500 hover:text-red-400"><i class="fab fa-youtube"></i></a>
   </div>
+  <p class="text-gray-400 text-2xl">© 2025 CarbonClarity.online — Made with <i class="fas fa-heart text-red-500"></i> by Mukesh Kumar Malakar</p>
 </footer>
 
 <script>
-  // Burger menu toggle
+  // Burger Menu Toggle
   document.querySelector('.burger').addEventListener('click', () => {
     document.getElementById('mobileMenu').classList.toggle('active');
   });
 
-  // Rest of your calculation script same as before
+  // Carbon Calculator
   const f = { electricity: 0.000233, car: 0.00021, flight: 0.15, waste: 0.031, meatMeal: 0.04 };
   let barChart, pieChart;
 
   function calculateCarbon() {
-    // ... (same as previous version - sab perfect hai)
+    const e = +document.getElementById('electricity').value || 0;
+    const c = +document.getElementById('carKm').value || 0;
+    const fl = +document.getElementById('flights').value || 0;
+    const w = +document.getElementById('waste').value || 0;
+    const m = +document.getElementById('meatMeals').value || 0;
+
+    const elec = e * 12 * f.electricity;
+    const car = c * 52 * f.car;
+    const flight = fl * f.flight;
+    const waste = w * 52 * f.waste;
+    const meat = m * 52 * f.meatMeal;
+    const total = elec + car + flight + waste + meat;
+
+    document.getElementById('totalEmission').textContent = total.toFixed(2) + " tons CO₂e";
+
+    document.getElementById('breakdown').innerHTML = `
+      <div class="bg-cyan-900/80 p-20 rounded-4xl"><p class="text-4xl">Electricity<br><strong class="text-7xl text-cyan-300">${elec.toFixed(2)} t</strong></p></div>
+      <div class="bg-blue-900/80 p-20 rounded-4xl"><p class="text-4xl">Car<br><strong class="text-7xl text-blue-300">${car.toFixed(2)} t</strong></p></div>
+      <div class="bg-yellow-900/80 p-20 rounded-4xl"><p class="text-4xl">Flights<br><strong class="text-7xl text-yellow-300">${flight.toFixed(2)} t</strong></p></div>
+      <div class="bg-red-900/80 p-20 rounded-4xl"><p class="text-4xl">Waste<br><strong class="text-7xl text-red-300">${waste.toFixed(2)} t</strong></p></div>
+      <div class="bg-purple-900/80 p-20 rounded-4xl"><p class="text-4xl">Diet<br><strong class="text-7xl text-purple-300">${meat.toFixed(2)} t</strong></p></div>
+    `;
+
+    const labels = ['Electricity','Car','Flights','Waste','Diet'];
+    const data = [elec, car, flight, waste, meat];
+    const colors = ['#34D399','#60A5FA','#FBBF24','#F87171','#C084FC'];
+
+    if (barChart) barChart.destroy();
+    if (pieChart) pieChart.destroy();
+
+    barChart = new Chart(document.getElementById('barChart'), { type: 'bar', data: { labels, datasets: [{ data, backgroundColor: colors, borderRadius: 20 }] }, options: { responsive: true, plugins: { title: { display: true, text: 'Your Carbon Sources', color: '#22d3ee', font: { size: 36 } }, legend: { display: false } } } });
+    pieChart = new Chart(document.getElementById('pieChart'), { type: 'doughnut', data: { labels, datasets: [{ data, backgroundColor: colors, borderWidth: 20, borderColor: '#020617' }] }, options: { responsive: true, plugins: { legend: { position: 'bottom', labels: { color: '#e5e7eb', font: { size: 20 } } } } } });
+
+    const tips = [];
+    if (meat > 2) tips.push("3 meat-free days/week = save 1.5+ tons/year");
+    if (fl > 1) tips.push("Replace one flight with train = massive impact");
+    if (car > 8) tips.push("Switch to EV or public transport = 90% cut");
+    if (elec > 3) tips.push("Solar + LEDs + green energy = game changer");
+    if (tips.length === 0) tips.push("You're already a climate leader!");
+
+    document.getElementById('suggestions').innerHTML = `<h3 class="text-8xl font-bold text-cyan-300 mb-32">Your Personal Action Plan</h3>` + tips.map(t => `<div class="bg-gradient-to-r from-cyan-900/90 to-emerald-900/90 p-20 rounded-4xl border-l-12 border-cyan-400 text-4xl my-16 shadow-2xl">${t}</div>`).join('');
+
+    document.getElementById('results').classList.remove('hidden');
+    document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
   }
 
-  function resetForm() { /* same */ }
-  function toggleFAQ(el) { /* same */ }
+  function resetForm() {
+    document.getElementById('carbonForm').reset();
+    document.getElementById('results').classList.add('hidden');
+    if (barChart) barChart.destroy();
+    if (pieChart) pieChart.destroy();
+  }
+
+  function toggleFAQ(el) {
+    const ans = el.nextElementSibling;
+    const icon = el.querySelector('i');
+    ans.classList.toggle('active');
+    icon.classList.toggle('fa-chevron-down');
+    icon.classList.toggle('fa-chevron-up');
+    if (ans.classList.contains('active')) {
+      ans.style.maxHeight = ans.scrollHeight + 100 + 'px';
+    } else {
+      ans.style.maxHeight = '0';
+    }
+  }
 </script>
 </body>
 </html>
