@@ -37,13 +37,14 @@
     .faq-q { padding:1.5rem 2rem; cursor:pointer; font-size:1.1rem; font-weight:700; color:#e0f2fe; display:flex; justify-content:space-between; align-items:center; background:rgba(34,211,238,0.15); transition:all 0.4s; }
     .faq-q i { font-size:1.4rem; color:#4ade80; transition:0.4s; }
     .faq-q.active { background:rgba(34,211,238,0.25); border-bottom:1px solid #22d3ee; }
-    .faq-a { max-height:0; overflow:hidden; padding:0 2rem; background:rgba(0,0,0,0.4); transition:all 0.6s ease; color:#cbd5e1; line-height:1.7; font-size:0.98rem; }
-    .faq-a.active { max-height:800px; padding:1.75rem 2rem 1.9rem; }
+    .faq-a { max-height:0; overflow:hidden; background:rgba(0,0,0,0.4); transition:max-height 0.6s ease; color:#cbd5e1; line-height:1.7; font-size:0.98rem; padding: 0 2rem; }
+    .faq-a.active { padding:1.75rem 2rem 1.9rem; }
     footer { padding:4rem 1.5rem 2.5rem; background:rgba(0,0,0,0.8); border-top:1px solid rgba(34,211,238,0.3); }
     .social-icons a { font-size:2rem; margin:0 1rem; color:#94a3b8; transition:0.4s; }
     .social-icons a:hover { color:#22d3ee; transform:translateY(-8px) scale(1.15); text-shadow:0 0 30px #22d3ee; }
     @media (max-width:1024px) { .calc-card { padding:3rem 1.75rem; } }
     @media (max-width:768px) { .nav-links { display:none; } .menu-btn { display:block; } .mobile-menu.active { display:flex; } .input-grid { grid-template-columns:1fr; } .calc-card { border-radius:2rem; } }
+    .pie-container { max-width: 400px; margin: auto; }
   </style>
 </head>
 <body>
@@ -128,7 +129,9 @@
       <div id="breakdown" class="grid grid-cols-1 md:grid-cols-3 gap-8 my-16 px-2"></div>
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-5xl mx-auto px-2">
         <canvas id="barChart"></canvas>
-        <canvas id="pieChart"></canvas>
+        <div class="pie-container">
+          <canvas id="pieChart"></canvas>
+        </div>
       </div>
       <div id="suggestions" class="mt-12 max-w-4xl mx-auto px-2"></div>
     </div>
@@ -310,16 +313,16 @@
       <p class="mt-4 text-gray-400">Real carbon tracking for a real future.</p>
     </div>
     <div class="social-icons flex justify-center items-center">
-      <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-      <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-      <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-      <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+      <a href="https://x.com/Mukeshkr741?s=08" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+      <a href="https://www.instagram.com/techinsight1x?igsh=MWN5Z2tqYWcyYmlydQ==" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="https://linkedin.com/comm/mynetwork/discovery-see-all?usecase=PEOPLE_FOLLOWS&followMember=mukesh-kumar-malakar" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+      <a href="https://youtube.com/@techinsightsx?si=hh7Ltd5-v2vvnkZ3" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
     </div>
     <div class="text-gray-400 flex flex-col justify-center space-y-2">
       <div>
-        <a href="#" class="hover:text-cyan-300">Privacy</a> • 
-        <a href="#" class="hover:text-cyan-300">Terms</a> • 
-        <a href="#" class="hover:text-cyan-300">Contact</a>
+        <a href="../privacy.html" class="hover:text-cyan-300">Privacy</a> • 
+        <a href="../terms.html" class="hover:text-cyan-300">Terms</a> • 
+        <a href="../contact.html" class="hover:text-cyan-300">Contact</a>
       </div>
     </div>
   </div>
@@ -480,6 +483,12 @@
   function toggleFAQ(el) {
     const ans = el.nextElementSibling;
     const icon = el.querySelector('i');
+    const isActive = ans.classList.contains('active');
+    if (isActive) {
+      ans.style.maxHeight = '0';
+    } else {
+      ans.style.maxHeight = ans.scrollHeight + 'px';
+    }
     ans.classList.toggle('active');
     icon.classList.toggle('fa-chevron-down');
     icon.classList.toggle('fa-chevron-up');
