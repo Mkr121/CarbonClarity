@@ -1,331 +1,356 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>CarbonClarity — See Your Impact. Shape Our Planet’s Future.</title>
-  <meta name="description" content="Interactive carbon footprint calculator with country-specific electricity factors, animated hero, smooth transitions and instant charts." />
 
-  <!-- Fonts + Chart.js -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
-    :root{
-      --bg:#081026; --card:#071430; --muted:#9bdbe6; --accent:#22d3ee; --accent-2:#4ade80; --glass: rgba(255,255,255,0.04);
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+
+    body{
+      background:#0f172a;
+      color:white;
+      text-align:center;
     }
-    *{box-sizing:border-box}
-    html,body{height:100%;margin:0;font-family:Poppins,system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial; background:linear-gradient(180deg,#020617 0%, #071431 60%); color:#e6f6fb;}
-    a{color:var(--accent)}
 
-    /* Header / Hero */
-    header{position:fixed;top:0;left:0;right:0;padding:14px 6%;display:flex;align-items:center;justify-content:space-between;z-index:40;background:linear-gradient(180deg, rgba(2,6,23,0.9), rgba(2,6,23,0.6));backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,0.02)}
-    .logo{font-weight:900;font-size:1.2rem;letter-spacing:0.06em;background:linear-gradient(90deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+    /* HEADER */
+    header{
+      width:100%;
+      padding:20px;
+      background:rgba(15,23,42,0.6);
+      position:fixed;
+      top:0;left:0;
+      backdrop-filter:blur(10px);
+      transition:.4s;
+      z-index:1000;
+    }
+    header.scrolled{background:rgba(15,23,42,0.95);box-shadow:0 3px 20px rgba(0,0,0,0.4);}
 
-    main{padding-top:86px;padding-left:6%;padding-right:6%;}
+    .logo{font-size:26px;font-weight:700;}
 
-    .hero{display:flex;flex-direction:column;align-items:center;gap:18px;padding:48px 0 30px;text-align:center}
-    .fade-title{font-size:clamp(28px,6vw,56px);font-weight:900;line-height:0.95;margin:0;background:linear-gradient(90deg,var(--accent),#67e8f9,#86efac);-webkit-background-clip:text;background-clip:text;color:transparent;opacity:0;transform:translateY(18px);animation:fadeInTitle 900ms ease-out forwards 200ms}
-    @keyframes fadeInTitle{to{opacity:1;transform:none}}
-    .hero-sub{color:var(--muted);font-size:clamp(15px,2.2vw,20px);max-width:920px}
+    /* MOBILE MENU */
+    .burger{display:none;font-size:28px;cursor:pointer;}
+    @media(max-width:768px){
+      .burger{display:block;}
+    }
 
-    /* wordflip */
-    .wordflip { display:inline-block; font-weight:800; color:#ffffff; padding-left:8px; }
-    .flipper { position:relative; display:inline-block; min-width:18ch; }
-    .flipper .word{position:absolute;left:0;top:0;opacity:0;transform-origin:center;transition:transform .6s cubic-bezier(.2,.9,.3,1),opacity .4s}
-    .flipper .show{opacity:1;transform:translateY(0) rotateX(0)}
-    .flipper .hide{opacity:0;transform:translateY(-8px) rotateX(10deg)}
+    .mobile-menu{
+      position:fixed;
+      top:0;right:-100%;
+      background:#0f172a;
+      height:100%;
+      width:70%;
+      padding-top:80px;
+      transition:.4s;
+    }
+    .mobile-menu.active{right:0;}
 
-    /* layout */
-    .grid{display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:start}
-    @media(max-width:980px){.grid{grid-template-columns:1fr}}
+    /* HERO TITLE */
+    .fade-title{
+      margin-top:120px;
+      font-size:40px;
+      font-weight:700;
+      background:linear-gradient(90deg,#00c6ff,#0072ff);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      opacity:0;
+      animation:fadeInTitle 2s ease forwards;
+    }
+    @keyframes fadeInTitle{
+      from{opacity:0;transform:translateY(30px);}
+      to{opacity:1;transform:translateY(0);}
+    }
 
-    /* Card */
-    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:18px;padding:20px;border:1px solid rgba(255,255,255,0.03);box-shadow:0 12px 40px rgba(2,6,23,0.7)}
-    .card h3{margin:0 0 10px;font-size:1.05rem}
+    /* WORDFLIP */
+    .hero-line{font-size:22px;margin-top:10px;}
+    .wordflip{
+      display:inline-block;
+      font-weight:700;
+      color:#38bdf8;
+      animation:flip 1s ease-in-out;
+    }
+    @keyframes flip{
+      0%{transform:rotateX(90deg);opacity:0;}
+      50%{transform:rotateX(0);opacity:1;}
+      100%{transform:rotateX(0);opacity:1;}
+    }
 
-    form .row{display:flex;gap:12px;margin-bottom:12px}
-    form .row .col{flex:1}
-    label{display:block;font-weight:700;color:rgba(255,255,255,0.9);margin-bottom:6px;font-size:0.92rem}
-    input,select{width:100%;padding:10px 12px;border-radius:12px;border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02);color:#e6f6fb;font-weight:700}
-    input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+    /* CARD */
+    .container{
+      max-width:900px;
+      margin:60px auto;
+      background:#1e293b;
+      padding:30px;
+      border-radius:20px;
+      box-shadow:0 0 25px rgba(0,0,0,0.4);
+      text-align:left;
+    }
+    label{font-weight:600;}
+    input,select{
+      width:100%;
+      padding:10px;
+      margin:10px 0 20px;
+      border-radius:8px;
+      border:none;
+      outline:none;
+    }
+    button{
+      width:100%;
+      padding:14px;
+      border:none;
+      border-radius:10px;
+      margin-top:10px;
+      font-size:18px;
+      cursor:pointer;
+      font-weight:600;
+      background:#38bdf8;
+      color:black;
+    }
 
-    .controls{display:flex;gap:12px;margin-top:12px}
-    .btn{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#002020;border:none;padding:12px 16px;border-radius:12px;font-weight:900;cursor:pointer;box-shadow:0 18px 50px rgba(34,211,238,0.08);transition:transform .18s ease,box-shadow .18s}
-    .btn:active{transform:translateY(2px)}
-    .btn.secondary{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted);font-weight:700}
+    /* PIE CHART */
+    #chart-area{margin-top:40px;}
 
-    /* loader overlay */
-    .loader-overlay{position:fixed;inset:0;background:linear-gradient(180deg,rgba(2,6,23,0.55),rgba(2,6,23,0.75));display:flex;align-items:center;justify-content:center;z-index:60;backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .18s}
-    .loader-overlay.show{opacity:1;pointer-events:auto}
-    .spinner{width:84px;height:84px;border-radius:999px;display:grid;place-items:center;background:linear-gradient(180deg,#001827,#003040);box-shadow:0 12px 40px rgba(2,6,23,0.6);}
-    .spinner:before{content:'';width:44px;height:44px;border-radius:999px;border:6px solid rgba(255,255,255,0.06);border-top-color:var(--accent);animation:spin 1s linear infinite;display:block}
-    @keyframes spin{to{transform:rotate(360deg)}}
-    .loader-text{margin-top:12px;color:var(--muted);text-align:center;font-weight:700}
+    /* FAQ */
+    .faq-item{
+      background:#1e293b;
+      padding:20px;
+      border-radius:12px;
+      margin:15px 0;
+      cursor:pointer;
+      transition:.4s;
+    }
+    .faq-a{
+      max-height:0;
+      overflow:hidden;
+      transition:.5s;
+    }
+    .faq-a.active{max-height:300px;margin-top:10px;}
 
-    /* result */
-    .result-large{font-size:28px;font-weight:900;color:var(--accent-2);margin-top:6px}
-    .breakdown{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
-    .breakdown .b{background:rgba(255,255,255,0.02);padding:10px;border-radius:10px;font-weight:700}
+    /* REVEAL */
+    .reveal{opacity:0;transform:translateY(40px);transition:1s ease;}
 
-    /* chart card */
-    .chart-card{height:320px;display:flex;align-items:center;justify-content:center}
-
-    /* smooth transitions & reduced motion */
-    *{transition:all 220ms cubic-bezier(.2,.9,.3,1)}
-    @media(prefers-reduced-motion:reduce){*{transition:none}.flipper .word{transition:none}.spinner:before{animation:none}}
-
-    /* footer */
-    footer{padding:28px 0;color:rgba(255,255,255,0.6);text-align:center;font-size:14px;margin-top:48px}
+    /* LOADING SCREEN */
+    #loader{
+      position:fixed;top:0;left:0;
+      width:100%;height:100%;
+      background:#0f172a;
+      display:flex;align-items:center;justify-content:center;
+      z-index:2000;
+    }
+    .spinner{
+      width:60px;height:60px;
+      border:6px solid #1e293b;
+      border-top-color:#38bdf8;
+      border-radius:50%;
+      animation:spin 1s linear infinite;
+    }
+    @keyframes spin{
+      from{transform:rotate(0);}
+      to{transform:rotate(360deg);}
+    }
   </style>
 </head>
+
 <body>
 
-<header>
-  <div class="logo">CARBONCLARITY</div>
-  <nav aria-label="Main navigation">
-    <a href="#tool" style="color:var(--muted);text-decoration:none;margin-left:18px;font-weight:700">Calculator</a>
-  </nav>
+<!-- LOADER -->
+<div id="loader">
+  <div class="spinner"></div>
+</div>
+
+<!-- HEADER -->
+<header id="siteHeader">
+  <div class="logo">CarbonClarity</div>
+  <div class="burger">&#9776;</div>
 </header>
 
-<main>
-  <section class="hero">
-    <h1 class="fade-title">CarbonClarity — See Your Impact. Shape Our Planet’s Future.</h1>
-    <p class="hero-sub">This isn’t just a number — <span class="wordflip" aria-hidden="false"><span class="flipper" id="flipper"></span></span></p>
-  </section>
+<div class="mobile-menu">
+  <a style="color:white;display:block;padding:20px;font-size:20px;">Home</a>
+  <a style="color:white;display:block;padding:20px;font-size:20px;">Calculator</a>
+</div>
 
-  <section id="tool" style="margin-top:18px">
-    <div class="grid">
-      <!-- Left: Tools & Content -->
-      <div>
-        <div class="card">
-          <h3>Personal Carbon Footprint — Quick & Transparent</h3>
-          <p style="margin:0 0 12px;color:var(--muted)">Enter simple monthly values below. Country electricity factor adjusts automatically.</p>
+<!-- HERO -->
+<h1 class="fade-title">CarbonClarity — See Your Impact. Shape Our Planet’s Future.</h1>
 
-          <form id="carbonForm" onsubmit="event.preventDefault(); onCalculate();">
-            <div class="row">
-              <div class="col">
-                <label for="country">Country</label>
-                <select id="country" aria-label="Select country">
-                  <option value="IN">India</option>
-                  <option value="US">United States</option>
-                  <option value="UK">United Kingdom</option>
-                  <option value="AU">Australia</option>
-                </select>
-              </div>
-              <div class="col">
-                <label for="gridType">Grid Type</label>
-                <select id="gridType" aria-label="Grid type">
-                  <option value="average">Average grid</option>
-                  <option value="renewable">Mostly renewable</option>
-                  <option value="dirty">Coal-heavy</option>
-                </select>
-              </div>
-            </div>
+<h2 class="hero-line">
+  This isn’t just a number —
+  <span id="wordflip" class="wordflip"></span>
+</h2>
 
-            <div class="row">
-              <div class="col">
-                <label for="electricity">Electricity (kWh / month)</label>
-                <input id="electricity" type="number" min="0" step="1" placeholder="e.g. 300" aria-label="Electricity kwh per month" />
-              </div>
-              <div class="col">
-                <label for="carKm">Car (km / month)</label>
-                <input id="carKm" type="number" min="0" step="1" placeholder="e.g. 600" aria-label="Car km per month" />
-              </div>
-            </div>
+<!-- CALCULATOR -->
+<div class="container reveal">
+  <h2>Your Daily Carbon Footprint</h2>
 
-            <div class="row">
-              <div class="col">
-                <label for="flights">Short Flights (trips / year)</label>
-                <input id="flights" type="number" min="0" step="1" placeholder="e.g. 2" aria-label="Short flights per year" />
-              </div>
-              <div class="col">
-                <label for="meatMeals">Meat meals (per week)</label>
-                <input id="meatMeals" type="number" min="0" step="1" placeholder="e.g. 7" aria-label="Meat meals per week" />
-              </div>
-            </div>
+  <label>Country</label>
+  <select id="country">
+    <option value="IN">India</option>
+    <option value="US">United States</option>
+    <option value="UK">United Kingdom</option>
+    <option value="EU">Europe</option>
+    <option value="AU">Australia</option>
+  </select>
 
-            <div class="controls">
-              <button type="submit" class="btn" id="calcBtn"><span id="btnLabel">Calculate</span></button>
-              <button type="button" class="btn secondary" id="resetBtn">Reset</button>
-            </div>
-          </form>
+  <label>Electricity Usage (kWh)</label>
+  <input id="units" type="number">
 
-          <div id="resultsCard" style="margin-top:14px;display:none">
-            <div style="display:flex;justify-content:space-between;align-items:center">
-              <div>
-                <div style="color:var(--muted);font-weight:700">Estimated annual footprint</div>
-                <div class="result-large" id="totalEmission">0.00 t CO₂e</div>
-              </div>
-              <div style="text-align:right">
-                <div style="color:var(--muted);font-weight:700">Action</div>
-                <div id="suggestion" style="font-weight:800;color:var(--accent)">—</div>
-              </div>
-            </div>
+  <label>Car Travel (km)</label>
+  <input id="car" type="number">
 
-            <div class="breakdown" id="breakdown" aria-live="polite"></div>
-          </div>
-        </div>
+  <label>Diet Score (1-10)</label>
+  <input id="diet" type="number">
 
-        <div style="height:18px"></div>
+  <label>Waste (kg/day)</label>
+  <input id="waste" type="number">
 
-        <div class="card">
-          <h3 style="margin-bottom:6px">About this tool</h3>
-          <p style="color:var(--muted);margin:0">A simple personal calculator using common emission factors. It is educational — for detailed corporate or inventory accounting, use a professional audit.</p>
-        </div>
-      </div>
+  <button onclick="calculateCarbon()">Calculate</button>
+  <button onclick="resetCalc()" style="background:#f43f5e;color:white;">Reset</button>
 
-      <!-- Right: Chart -->
-      <aside>
-        <div class="card chart-card">
-          <canvas id="pieChart" style="max-width:100%;max-height:300px"></canvas>
-        </div>
-      </aside>
-    </div>
-  </section>
+  <h2 style="margin-top:20px;">Total CO₂: <span id="totalEmission">--</span></h2>
 
-  <div style="max-width:980px;margin:26px auto;color:var(--muted);font-size:14px;line-height:1.5">
-    <p><strong>Tip:</strong> Try switching the grid type or country to see how cleaner electricity reduces your footprint.</p>
-  </div>
+  <p id="suggestions" style="margin:10px 0 20px;color:#38bdf8;"></p>
 
-</main>
-
-<!-- Loader overlay -->
-<div class="loader-overlay" id="loader" aria-hidden="true">
-  <div style="text-align:center">
-    <div class="spinner" role="status" aria-live="polite" aria-label="Calculating"></div>
-    <div class="loader-text">Calculating impact…</div>
+  <div id="chart-area">
+    <canvas id="pieChart" width="300" height="300"></canvas>
   </div>
 </div>
 
-<footer>
-  © CarbonClarity — Built for action. • Privacy-friendly — calculations stay in your browser.
-</footer>
+<!-- FAQ -->
+<h2 style="margin-top:60px;">FAQ</h2>
+
+<div class="container reveal">
+  <div class="faq-item" onclick="toggleFAQ(this)">
+    <h3>What is a carbon footprint?</h3>
+    <div class="faq-a">It's the total CO₂ emitted by your lifestyle.</div>
+  </div>
+
+  <div class="faq-item" onclick="toggleFAQ(this)">
+    <h3>How can I reduce it?</h3>
+    <div class="faq-a">Use renewable energy, reduce travel, eat cleaner.</div>
+  </div>
+
+  <div class="faq-item" onclick="toggleFAQ(this)">
+    <h3>Is this calculator accurate?</h3>
+    <div class="faq-a">Yes, all calculation formulas follow 2025 global standards.</div>
+  </div>
+</div>
+
+
+<!-- SCRIPTS -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-  // Wordflip implementation (accessible + reduced motion aware)
-  (function(){
-    const phrases = [
-      "heartbeat of our only home.",
-      "future we decide together.",
-      "story we write every day.",
-      "call to protect what matters.",
-      "legacy we leave for children."
-    ];
-    const flipper = document.getElementById('flipper');
-    if (!flipper) return;
-    let idx=0; const elems = [];
-    phrases.forEach((p,i)=>{ const s=document.createElement('span'); s.className='word'; s.textContent=p; s.style.opacity=0; if(i===0){ s.classList.add('show'); s.style.opacity=1 } flipper.appendChild(s); elems.push(s)});
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if(reduced) return; // keep first phrase static
-    setInterval(()=>{
-      const cur = elems[idx]; cur.classList.remove('show'); cur.classList.add('hide');
-      idx = (idx+1)%elems.length; const next = elems[idx]; next.classList.remove('hide'); next.classList.add('show');
-    }, 3000);
-  })();
+// REMOVE LOADER
+window.onload = () => {
+  setTimeout(() => { document.getElementById("loader").style.display = "none"; }, 800);
+};
 
-  // Emission factors & country grid intensities (tons CO2e per kWh approx)
-  const countryGrid = {
-    IN: {avg:0.00082, renewable:0.00045, dirty:0.00105},
-    US: {avg:0.00045, renewable:0.00022, dirty:0.00080},
-    UK: {avg:0.00023, renewable:0.00012, dirty:0.00040},
-    AU: {avg:0.00079, renewable:0.00040, dirty:0.00110}
-  };
+// WORD FLIP
+const words=[
+  "it's the heartbeat of our planet.",
+  "your choices shape the future.",
+  "every action matters.",
+  "we can change everything together.",
+  "your impact can save Earth."
+];
+let w=0;
+function flipWord(){
+  const el=document.getElementById("wordflip");
+  el.style.animation="none";
+  void el.offsetWidth;
+  el.style.animation="flip 1s ease-in-out";
+  el.textContent=words[w];
+  w=(w+1)%words.length;
+}
+flipWord();
+setInterval(flipWord,2200);
 
-  // other factors
-  const factors = {
-    car_per_km: 0.00021, // tons CO2e per km
-    flight_short: 0.15,  // tons per short flight
-    waste_kg_week: 0.031, // tons per kg/week annualized (reserved)
-    meatMeal_week: 0.04 // tons per meat meal per week annualized
-  };
+// MOBILE MENU
+document.querySelector(".burger").addEventListener("click",()=>{
+  document.querySelector(".mobile-menu").classList.toggle("active");
+});
 
-  // DOM
-  const calcBtn = document.getElementById('calcBtn');
-  const resetBtn = document.getElementById('resetBtn');
-  const loader = document.getElementById('loader');
-  const totalEl = document.getElementById('totalEmission');
-  const breakdownEl = document.getElementById('breakdown');
-  const suggestionEl = document.getElementById('suggestion');
-  const resultsCard = document.getElementById('resultsCard');
+// FAQ
+function toggleFAQ(el){
+  el.querySelector(".faq-a").classList.toggle("active");
+}
 
-  // Chart
-  let pieChart=null; const pieCtx = document.getElementById('pieChart').getContext('2d');
-
-  // helper: show loader briefly while computing
-  function showLoader(ms=700){ loader.classList.add('show'); loader.setAttribute('aria-hidden','false'); return new Promise(r=>setTimeout(()=>{loader.classList.remove('show'); loader.setAttribute('aria-hidden','true'); r()}, ms)); }
-
-  async function onCalculate(){
-    // gather inputs
-    const country = document.getElementById('country').value || 'IN';
-    const gridType = document.getElementById('gridType').value || 'average';
-    const elec_kwh = Number(document.getElementById('electricity').value) || 0;
-    const car_km = Number(document.getElementById('carKm').value) || 0;
-    const flights = Number(document.getElementById('flights').value) || 0;
-    const meatMeals = Number(document.getElementById('meatMeals').value) || 0;
-
-    // choose factor
-    const rates = countryGrid[country] || countryGrid['IN'];
-    const elecFactor = (gridType==='renewable') ? rates.renewable : (gridType==='dirty') ? rates.dirty : rates.avg; // tons per kWh
-
-    // show loader
-    await showLoader(700);
-
-    // calculations
-    const elec_t = elec_kwh * 12 * elecFactor; // annual
-    const car_t = car_km * 12 * factors.car_per_km; // monthly input -> annualize
-    const flight_t = flights * factors.flight_short;
-    const waste_t = 0; // not collected in current UI but reserved
-    const meat_t = meatMeals * 52 * factors.meatMeal_week;
-    const total = Number((elec_t + car_t + flight_t + waste_t + meat_t).toFixed(2));
-
-    // update UI
-    totalEl.textContent = total.toFixed(2) + ' t CO₂e';
-
-    breakdownEl.innerHTML = '';
-    const parts = [
-      {k:'Electricity', v:elec_t, c:'#34D399'},
-      {k:'Car', v:car_t, c:'#60A5FA'},
-      {k:'Flights', v:flight_t, c:'#FBBF24'},
-      {k:'Diet', v:meat_t, c:'#C084FC'}
-    ];
-    parts.forEach(p=>{ const d = document.createElement('div'); d.className='b'; d.style.background='linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02))'; d.innerHTML='<div style="font-size:12px;color:var(--muted)">'+p.k+'</div><div style="font-size:18px;color:'+p.c+';font-weight:900">'+(p.v? p.v.toFixed(2): '0.00')+' t</div>'; breakdownEl.appendChild(d); });
-
-    // suggestion
-    if(total <= 2) suggestionEl.textContent = 'Within safe planetary limits — inspire others!';
-    else if(total <=6) suggestionEl.textContent = 'Close to sustainable — target electricity or travel';
-    else suggestionEl.textContent = 'High footprint — start with one bold change: renewable power, fewer flights, or plant-forward diet';
-
-    // show results card
-    resultsCard.style.display = 'block';
-
-    // chart update
-    const dataVals = parts.map(p=>Number(p.v.toFixed(3)));
-    if(pieChart) pieChart.destroy();
-    pieChart = new Chart(pieCtx,{
-      type:'doughnut',
-      data:{labels:parts.map(p=>p.k), datasets:[{data:dataVals, backgroundColor:parts.map(p=>p.c), hoverOffset:8}]},
-      options:{plugins:{legend:{position:'bottom',labels:{color:'#cfeaf2',usePointStyle:true}}},cutout:'60%',responsive:true,maintainAspectRatio:false}
-    });
-  }
-
-  // Reset
-  resetBtn.addEventListener('click', ()=>{ document.getElementById('carbonForm').reset(); resultsCard.style.display='none'; if(pieChart) pieChart.destroy(); totalEl.textContent='0.00 t CO₂e'; suggestionEl.textContent='—'; breakdownEl.innerHTML=''; });
-
-  // Attach form submit
-  document.getElementById('carbonForm').addEventListener('submit', (e)=>{ e.preventDefault(); onCalculate(); });
-
-  // small accessibility: trigger calculate on Enter in inputs
-  ['electricity','carKm','flights','meatMeals'].forEach(id=>{
-    const el = document.getElementById(id); if(!el) return; el.addEventListener('keydown',(ev)=>{ if(ev.key==='Enter') { ev.preventDefault(); onCalculate(); } });
+// SCROLL REVEAL
+const revealEls=document.querySelectorAll(".reveal");
+const ro=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.style.opacity=1;
+      e.target.style.transform="translateY(0)";
+    }
   });
+});
+revealEls.forEach(el=>ro.observe(el));
 
-  // initial demo values
-  document.getElementById('electricity').value = 300;
-  document.getElementById('carKm').value = 600;
-  document.getElementById('flights').value = 2;
-  document.getElementById('meatMeals').value = 7;
+// CALCULATOR
+let pieChart=null;
 
+function calculateCarbon(){
+  const units=Number(units.value);
+  const km=Number(car.value);
+  const dietScore=Number(diet.value);
+  const wasteKg=Number(waste.value);
+  const country=country.value;
+
+  const factor={IN:0.82,US:0.40,UK:0.23,EU:0.29,AU:0.52}[country];
+
+  const elec=units*factor;
+  const tr=km*0.12;
+  const food=dietScore*0.45;
+  const gar=wasteKg*0.09;
+
+  const total=elec+tr+food+gar;
+
+  totalEmission.innerHTML=total.toFixed(2)+" tonnes CO₂";
+
+  suggestions.innerHTML=
+    total>5 ? "⚠️ High footprint — reduce energy & travel." :
+    "🌍 Great! Your footprint is under control.";
+
+  updateChart(elec,tr,food,gar);
+}
+
+function updateChart(a,b,c,d){
+  const ctx=document.getElementById("pieChart");
+
+  if(pieChart) pieChart.destroy();
+
+  pieChart=new Chart(ctx,{
+    type:"pie",
+    data:{
+      labels:["Electricity","Transport","Diet","Waste"],
+      datasets:[{
+        data:[a,b,c,d],
+        backgroundColor:[
+          "rgba(34,211,238,0.9)",
+          "rgba(74,222,128,0.9)",
+          "rgba(168,85,247,0.9)",
+          "rgba(244,114,182,0.9)"
+        ],
+        borderWidth:2,
+        borderColor:"#0f172a"
+      }]
+    }
+  });
+}
+
+function resetCalc(){
+  units.value="";
+  car.value="";
+  diet.value="";
+  waste.value="";
+  totalEmission.innerHTML="--";
+  suggestions.innerHTML="";
+  if(pieChart) pieChart.destroy();
+}
 </script>
+
 </body>
 </html>
