@@ -99,7 +99,14 @@
     .crisis-card:hover{transform:translateY(-15px);box-shadow:0 0 80px rgba(239,68,68,0.6);}
     .crisis-card i{font-size:4.5rem;margin-bottom:1rem;color:#ff6b6b;}
 
-    footer{background:rgba(0,0,0,0.98);padding:6rem 5% 4rem;text-align:center;border-top:2px solid rgba(34,211,238,0.5);}
+    footer{
+      background:rgba(0,0,0,0.98);padding:6rem 5% 4rem;text-align:center;
+      border-top:2px solid rgba(34,211,238,0.5);
+    }
+    .footer-links a{
+      color:#94a3b8;margin:0 1rem;font-size:1rem;transition:0.3s;
+    }
+    .footer-links a:hover{color:#22d3ee;}
 
     @media (max-width:768px){
       .burger{display:block !important;}
@@ -113,6 +120,7 @@
       .input-grid{gap:1.8rem;}
       input[type=number]{font-size:1rem;padding:1rem;}
       .btn{font-size:1rem;padding:0.9rem 2rem;}
+      .footer-links a{margin:0.5rem;font-size:0.95rem;}
     }
   </style>
 </head>
@@ -170,7 +178,7 @@
       <div id="breakdown" class="grid grid-cols-1 md:grid-cols-5 gap-8 my-16"></div>
       <div class="my-16"><canvas id="barChart"></canvas></div>
       <div class="my-16"><canvas id="pieChart"></canvas></div>
-      <div id="suggestions" class="my-16"></div>
+      <div id="suggestions" class="my-16 text-2xl text-cyan-200"></div>
     </div>
   </div>
 </section>
@@ -189,21 +197,9 @@
   </div>
 
   <div class="crisis-grid">
-    <div class="crisis-card">
-      <i class="fas fa-temperature-high"></i>
-      <p class="text-3xl font-black text-orange-400">2024–2025</p>
-      <p class="text-xl mt-2">Hottest years ever recorded</p>
-    </div>
-    <div class="crisis-card">
-      <i class="fas fa-water"></i>
-      <p class="text-3xl font-black text-cyan-400">1 in 4 people</p>
-      <p class="text-xl mt-2">Affected by floods</p>
-    </div>
-    <div class="crisis-card">
-      <i class="fas fa-tint"></i>
-      <p class="text-3xl font-black text-purple-400">Sea level rising</p>
-      <p class="text-xl mt-2">8–10 mm/year</p>
-    </div>
+    <div class="crisis-card"><i class="fas fa-temperature-high"></i><p class="text-3xl font-black text-orange-400">2024–2025</p><p class="text-xl mt-2">Hottest years ever</p></div>
+    <div class="crisis-card"><i class="fas fa-water"></i><p class="text-3xl font-black text-cyan-400">1 in 4 people</p><p class="text-xl mt-2">Affected by floods</p></div>
+    <div class="crisis-card"><i class="fas fa-tint"></i><p class="text-3xl font-black text-purple-400">Sea rising</p><p class="text-xl mt-2">8–10 mm/year</p></div>
   </div>
 
   <div class="text-center my-16 text-2xl md:text-4xl text-gray-200">
@@ -226,12 +222,10 @@
   </h2>
   <div class="max-w-4xl mx-auto space-y-8 text-lg">
     <div class="bg-black/50 p-8 rounded-2xl border border-cyan-900/50">
-      <strong>Q:</strong> How accurate is this?<br>
-      <strong>A:</strong> Uses 2025 global data from IPCC, IEA, and 190+ countries.
+      <strong>Q:</strong> How accurate is this?<br><strong>A:</strong> Uses 2025 data from IPCC, IEA, UN — more accurate than 99% calculators.
     </div>
     <div class="bg-black/50 p-8 rounded-2xl border border-cyan-900/50">
-      <strong>Q:</strong> Can one person make a difference?<br>
-      <strong>A:</strong> Yes. Cutting 5 tons = planting 250 trees = removing 20 cars.
+      <strong>Q:</strong> Can one person make a difference?<br><strong>A:</strong> Yes. Cutting 5 tons = planting 250 trees = removing 20 cars from road.
     </div>
   </div>
 
@@ -242,6 +236,7 @@
   </div>
 </section>
 
+<!-- FINAL FOOTER WITH TERMS, PRIVACY, CONTACT -->
 <footer>
   <h3 class="text-5xl md:text-7xl font-bold bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent mb-10">CarbonClarity</h3>
   <div class="flex justify-center space-x-12 text-5xl mb-10">
@@ -250,7 +245,14 @@
     <a href="https://linkedin.com/in/mukesh-kumar-malakar" class="hover:text-blue-300"><i class="fab fa-linkedin"></i></a>
     <a href="https://youtube.com/@techinsightsx" class="hover:text-red-300"><i class="fab fa-youtube"></i></a>
   </div>
-  <p class="text-2xl text-gray-400">Made with <i class="fas fa-heart text-red-500"></i> for Earth</p>
+
+  <div class="footer-links mt-10">
+    <a href="terms.html">Terms of Service</a> • 
+    <a href="privacy.html">Privacy Policy</a> • 
+    <a href="contact.html">Contact Us</a>
+  </div>
+
+  <p class="text-2xl text-gray-400 mt-8">Made with <i class="fas fa-heart text-red-500"></i> for Earth</p>
 </footer>
 
 <script>
