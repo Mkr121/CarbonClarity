@@ -6,111 +6,554 @@
   <title>CarbonClarity 2025 — Save Our Only Home</title>
   <meta name="description" content="The most accurate & emotional carbon footprint calculator on Earth." />
   <link rel="icon" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEglYezDr38PQIqu1wKJB6PWf3w4W8h7Tfri30UqTNbHygp7YLCjiw2ikmlDel8IYMGaKl5ZlYXzm_YLQZVxuQPNz57dKbXTuz00wAX4NNs1xs5ERzKoIxjdwzjgAScjSg-GX-VnnQrNf3dhvr0J2HKHtyqB8HlQbLfSsvt7cGh1-lf8pspR8IEjzHIPnye_/s192/android-chrome-192x192.png" type="image/x-icon"/>
+
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@800;900&family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"/>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
   <style>
     *, *::before, *::after {margin:0;padding:0;box-sizing:border-box;}
     html,body{width:100%;overflow-x:hidden;}
-    body{font-family:'Inter',sans-serif;background:#020617;color:white;scroll-behavior:smooth;}
+    body{
+      font-family:'Inter',sans-serif;
+      background:#020617;
+      color:white;
+      scroll-behavior:smooth;
+    }
+    body.menu-open{
+      overflow:hidden;
+    }
 
-    section, footer {width:100vw;position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;}
+    section, footer {
+      width:100vw;
+      position:relative;
+      left:50%;
+      right:50%;
+      margin-left:-50vw;
+      margin-right:-50vw;
+    }
 
+    /* HEADER */
     header{
-      position:fixed;top:0;left:0;right:0;z-index:1000;
-      background:rgba(2,6,23,0.97);backdrop-filter:blur(20px);
-      padding:1rem 5%;display:flex;justify-content:space-between;align-items:center;
+      position:fixed;
+      top:0;left:0;right:0;
+      z-index:1000;
+      background:rgba(2,6,23,0.97);
+      backdrop-filter:blur(20px);
+      padding:1rem 5%;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
       border-bottom:1px solid rgba(34,211,238,0.4);
     }
-    .logo{font-family:'Orbitron',sans-serif;font-size:2.4rem;font-weight:900;
+    .logo{
+      font-family:'Orbitron',sans-serif;
+      font-size:2.4rem;
+      font-weight:900;
       background:linear-gradient(90deg,#22d3ee,#86efac);
-      -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+      -webkit-background-clip:text;
+      background-clip:text;
+      -webkit-text-fill-color:transparent;
+      letter-spacing:0.06em;
     }
-    .nav-links a{color:#e2e8f0;font-weight:600;padding:0.7rem 1.4rem;border-radius:50px;transition:all .3s;font-size:1.1rem;}
-    .nav-links a:hover{background:rgba(34,211,238,0.3);color:#22d3ee;}
-    .burger{display:none;color:#22d3ee;font-size:2rem;cursor:pointer;}
+    .nav-links a{
+      color:#e2e8f0;
+      font-weight:600;
+      padding:0.7rem 1.4rem;
+      border-radius:50px;
+      transition:all .3s;
+      font-size:1.1rem;
+      white-space:nowrap;
+    }
+    .nav-links a:hover{
+      background:rgba(34,211,238,0.3);
+      color:#22d3ee;
+    }
+    .burger{
+      display:none;
+      color:#22d3ee;
+      font-size:2rem;
+      cursor:pointer;
+    }
     .mobile-menu{
-      position:fixed;top:70px;left:0;right:0;background:rgba(2,6,23,0.99);
-      backdrop-filter:blur(25px);padding:2rem 5%;display:none;flex-direction:column;
-      gap:1.8rem;font-size:1.6rem;text-align:center;z-index:999;
-      border-bottom:4px solid #22d3ee;box-shadow:0 20px 40px rgba(0,0,0,0.8);
+      position:fixed;
+      top:70px;
+      left:0;
+      right:0;
+      background:rgba(2,6,23,0.99);
+      backdrop-filter:blur(25px);
+      padding:2rem 5%;
+      display:none;
+      flex-direction:column;
+      gap:1.8rem;
+      font-size:1.6rem;
+      text-align:center;
+      z-index:999;
+      border-bottom:4px solid #22d3ee;
+      box-shadow:0 20px 40px rgba(0,0,0,0.8);
+    }
+    .mobile-menu a{
+      color:#e2e8f0;
+      font-weight:600;
+      padding:0.8rem 0;
+      border-radius:999px;
+    }
+    .mobile-menu a:hover{
+      background:rgba(34,211,238,0.2);
+      color:#22d3ee;
     }
     .mobile-menu.active{display:flex;}
 
-    .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:0 5%;
-      background:radial-gradient(circle at 20% 80%,#0f172a,#020617);}
-    .hero h1{font-size:clamp(4.5rem,14vw,13rem);font-weight:900;line-height:0.85;letter-spacing:-8px;
+    /* HERO */
+    .hero{
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      text-align:center;
+      padding:7rem 5% 5rem;
+      background:radial-gradient(circle at 20% 80%,#0f172a,#020617);
+    }
+    .hero h1{
+      font-size:clamp(3.8rem,14vw,13rem);
+      font-weight:900;
+      line-height:0.9;
+      letter-spacing:-6px;
       background:linear-gradient(90deg,#22d3ee,#67e8f9,#86efac,#c084fc);
-      -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
-      text-shadow:0 0 140px rgba(34,211,238,1);}
-    .glow-line{height:10px;background:linear-gradient(90deg,transparent,#22d3ee,#4ade80,transparent);width:90%;margin:4rem auto;
-      border-radius:20px;box-shadow:0 0 80px #22d3ee;animation:flow 5s infinite linear;}
+      -webkit-background-clip:text;
+      background-clip:text;
+      -webkit-text-fill-color:transparent;
+      text-shadow:0 0 140px rgba(34,211,238,1);
+    }
+    .hero-sub{
+      margin-top:1.8rem;
+      font-size:clamp(1.6rem,4vw,3.2rem);
+      color:#a5f3fc;
+      font-weight:400;
+      max-width:40rem;
+      line-height:1.3;
+    }
+    .hero-tag{
+      margin-top:2.5rem;
+      font-size:clamp(1.2rem,3.1vw,2.1rem);
+      color:#cbd5f5;
+      max-width:42rem;
+      line-height:1.5;
+    }
+    .glow-line{
+      height:10px;
+      background:linear-gradient(90deg,transparent,#22d3ee,#4ade80,transparent);
+      width:90%;
+      max-width:800px;
+      margin:3rem auto;
+      border-radius:20px;
+      box-shadow:0 0 80px #22d3ee;
+      animation:flow 5s infinite linear;
+    }
     @keyframes flow{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
 
-    .calc-section{padding:8rem 5%;background:linear-gradient(135deg,rgba(34,211,238,0.18),rgba(74,222,128,0.18));}
-    .calc-card{background:rgba(15,40,80,0.7);border-radius:3.5rem;padding:6rem 6%;max-width:1400px;margin:0 auto;
-      backdrop-filter:blur(30px);box-shadow:0 60px 160px rgba(0,0,0,0.9);}
+    /* CALCULATOR SECTION */
+    .calc-section{
+      padding:7rem 5% 7rem;
+      background:linear-gradient(135deg,rgba(34,211,238,0.18),rgba(74,222,128,0.18));
+    }
+    .calc-card{
+      background:rgba(15,40,80,0.7);
+      border-radius:3.5rem;
+      padding:4.5rem 5%;
+      max-width:1400px;
+      margin:0 auto;
+      backdrop-filter:blur(30px);
+      box-shadow:0 40px 120px rgba(0,0,0,0.9);
+    }
+    .calc-title{
+      font-size:clamp(2.6rem,6vw,4.8rem);
+      line-height:1.05;
+      margin-bottom:2.5rem;
+    }
+    .input-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+      gap:2.4rem;
+      margin-top:2.8rem;
+    }
+    .input-grid label{
+      display:block;
+      margin-bottom:0.9rem;
+      font-size:1.1rem;
+      color:#e0f2fe;
+    }
+    input[type=number]{
+      width:100%;
+      background:rgba(15,40,70,0.98);
+      border:2.5px solid #22d3ee;
+      border-radius:3rem;
+      padding:1.1rem 1.5rem;
+      font-size:1.2rem;
+      font-weight:700;
+      color:#a5f3fc;
+      text-align:center;
+      transition:all .3s;
+    }
+    input[type=number]:focus{
+      outline:none;
+      border-color:#4ade80;
+      transform:scale(1.03);
+      box-shadow:0 0 35px rgba(74,222,128,0.8);
+    }
+    .btn{
+      padding:1.1rem 2.7rem;
+      border-radius:3rem;
+      font-size:1.25rem;
+      font-weight:900;
+      background:linear-gradient(90deg,#22d3ee,#4ade80);
+      color:black;
+      box-shadow:0 22px 60px rgba(34,211,238,0.7);
+      transition:all .3s;
+      border:none;
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:0.5rem;
+      text-align:center;
+    }
+    .btn:hover{
+      transform:translateY(-6px);
+      box-shadow:0 34px 80px rgba(74,222,128,1);
+    }
+    .btn-alt{
+      background:linear-gradient(90deg,#f97316,#ef4444);
+      box-shadow:0 22px 60px rgba(248,113,113,0.7);
+    }
 
-    .input-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2.5rem;margin-top:4rem;}
-    input[type=number]{width:100%;background:rgba(15,40,70,0.98);border:3px solid #22d3ee;border-radius:3rem;
-      padding:1.6rem 2rem;font-size:1.4rem;font-weight:700;color:#a5f3fc;text-align:center;transition:all .4s;}
-    input[type=number]:focus{outline:none;border-color:#4ade80;transform:scale(1.04);box-shadow:0 0 50px rgba(74,222,128,0.8);}
-    .btn{padding:1.6rem 4rem;border-radius:3.5rem;font-size:1.6rem;font-weight:900;
-      background:linear-gradient(90deg,#22d3ee,#4ade80);color:black;box-shadow:0 30px 80px rgba(34,211,238,0.7);transition:all .4s;}
-    .btn:hover{transform:translateY(-12px);box-shadow:0 50px 100px rgba(74,222,128,1);}
+    .results-wrapper{
+      margin-top:3.5rem;
+      text-align:center;
+    }
+    .results-heading{
+      font-size:clamp(2.4rem,6vw,4.5rem);
+      margin-bottom:1.8rem;
+    }
+    .total-emission{
+      font-size:clamp(2.8rem,7vw,5.6rem);
+      font-weight:900;
+      color:#6ee7b7;
+      margin:1.8rem 0 2.5rem;
+    }
+    #breakdown{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+      gap:1.8rem;
+      margin:2.5rem 0 3rem;
+    }
+    #breakdown .box{
+      padding:1.8rem 1.3rem;
+      border-radius:2.1rem;
+      text-align:center;
+    }
+    #breakdown .box-title{
+      font-size:1.25rem;
+      margin-bottom:0.6rem;
+    }
+    #breakdown .box-value{
+      font-size:2.3rem;
+      font-weight:800;
+    }
 
-    .content-faq{padding:10rem 5% 14rem;background:#020617;}
-    .highlight-quote{background:linear-gradient(135deg,rgba(168,85,247,0.5),rgba(34,211,238,0.5));
-      padding:8rem 10%;border-radius:5rem;border:4px solid rgba(168,85,247,0.9);max-width:1500px;margin:8rem auto;
-      box-shadow:0 0 200px rgba(168,85,247,1);}
+    .chart-container{
+      max-width:900px;
+      margin:0 auto;
+      padding:1.5rem 1rem;
+    }
+    .chart-container canvas{
+      width:100% !important;
+      height:auto !important;
+      max-height:420px;
+    }
+    #suggestions{
+      margin-top:2.5rem;
+      font-size:clamp(1.4rem,3.5vw,2.1rem);
+      color:#a5f3fc;
+    }
 
-    .crisis-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:4rem;max-width:1500px;margin:8rem auto;}
-    .crisis-card{background:rgba(239,68,68,0.35);padding:5rem 3rem;border-radius:4.5rem;text-align:center;
-      border:3px solid rgba(239,68,68,0.7);box-shadow:0 0 90px rgba(239,68,68,0.6);transition:0.5s;}
-    .crisis-card:hover{transform:translateY(-20px);}
+    /* CONTENT + FAQ */
+    .content-faq{
+      padding:7rem 5% 9rem;
+      background:#020617;
+    }
+    .highlight-quote{
+      background:linear-gradient(135deg,rgba(168,85,247,0.5),rgba(34,211,238,0.5));
+      padding:4.5rem 7%;
+      border-radius:3.8rem;
+      border:4px solid rgba(168,85,247,0.9);
+      max-width:1200px;
+      margin:4.5rem auto 5rem;
+      box-shadow:0 0 140px rgba(168,85,247,1);
+    }
+    .highlight-quote p{
+      font-size:clamp(1.8rem,4.5vw,3.4rem);
+      line-height:1.15;
+    }
 
-    /* 8× TEXT FIXED FOR MOBILE */
-    .beyond-text{font-size:clamp(4rem,15vw,9rem);font-weight:900;line-height:1;
-      background:linear-gradient(90deg,#ef4444,#f97316);-webkit-background-clip:text;background-clip:text;
-      -webkit-text-fill-color:transparent;text-shadow:0 0 80px rgba(239,68,68,0.8);}
+    .crisis-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:2.5rem;
+      max-width:1300px;
+      margin:4.5rem auto 4rem;
+    }
+    .crisis-card{
+      background:rgba(239,68,68,0.35);
+      padding:3.2rem 2.3rem;
+      border-radius:3rem;
+      text-align:center;
+      border:3px solid rgba(239,68,68,0.7);
+      box-shadow:0 0 70px rgba(239,68,68,0.6);
+      transition:0.4s;
+    }
+    .crisis-card:hover{
+      transform:translateY(-12px);
+    }
+    .crisis-card p{
+      line-height:1.3;
+    }
 
-    /* FAQ PERFECT ON MOBILE */
-    .faq-heading{font-size:clamp(4rem,14vw,9rem);font-weight:900;line-height:1;
-      background:linear-gradient(90deg,#22d3ee,#86efac);-webkit-background-clip:text;background-clip:text;
-      -webkit-text-fill-color:transparent;margin-bottom:4rem !important;}
-    .faq-item{background:rgba(15,40,80,0.65);border-radius:3.5rem;margin-bottom:2.5rem;overflow:hidden;
-      border:3px solid rgba(34,211,238,0.5);max-width:1200px;margin-left:auto;margin-right:auto;}
-    .faq-q{padding:2.8rem 6%;cursor:pointer;font-size:1.8rem;font-weight:700;color:#e0f2fe;
-      display:flex;justify-content:space-between;align-items:center;background:rgba(34,211,238,0.3);}
-    .faq-q:hover{background:rgba(34,211,238,0.45);}
-    .faq-q i{font-size:2.4rem;color:#4ade80;transition:0.5s;}
-    .faq-a{max-height:0;overflow:hidden;background:rgba(0,0,0,0.75);transition:max-height 0.9s ease;
-      color:#cbd5e1;line-height:2;font-size:1.5rem;padding:0 6%;}
-    .faq-a.active{padding:4.5rem 6%;max-height:1000px;}
+    .avg-text{
+      font-size:clamp(1.6rem,3.8vw,2.6rem);
+      margin-bottom:0.7rem;
+    }
 
-    footer{background:rgba(0,0,0,0.98);padding:10rem 5% 6rem;text-align:center;border-top:4px solid rgba(34,211,238,0.6);}
-    .footer-links a{color:#94a3b8;margin:0 1.2rem;font-size:1.2rem;transition:0.3s;}
-    .footer-links a:hover{color:#22d3ee;text-decoration:underline;}
+    .beyond-text{
+      font-size:clamp(3.5rem,13vw,6rem);
+      font-weight:900;
+      line-height:1.1;
+      background:linear-gradient(90deg,#ef4444,#f97316);
+      -webkit-background-clip:text;
+      background-clip:text;
+      -webkit-text-fill-color:transparent;
+      text-shadow:0 0 80px rgba(239,68,68,0.8);
+      margin-top:2.3rem;
+    }
 
+    .actions-title{
+      font-size:clamp(2.4rem,6.5vw,4.8rem);
+      margin:4.5rem 0 3rem;
+    }
+    .actions-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
+      gap:1.8rem;
+      max-width:1050px;
+      margin:0 auto;
+    }
+    .action-card{
+      background:rgba(0,0,0,0.6);
+      padding:2.5rem 1.2rem;
+      border-radius:2.5rem;
+      text-align:center;
+    }
+
+    /* FAQ */
+    .faq-heading{
+      font-size:clamp(2.8rem,7vw,4.8rem);
+      font-weight:900;
+      line-height:1.05;
+      background:linear-gradient(90deg,#22d3ee,#86efac);
+      -webkit-background-clip:text;
+      background-clip:text;
+      -webkit-text-fill-color:transparent;
+      margin:4.5rem 0 3rem !important;
+      text-align:center;
+    }
+    .faq-item{
+      background:rgba(15,40,80,0.65);
+      border-radius:3rem;
+      margin-bottom:1.7rem;
+      overflow:hidden;
+      border:3px solid rgba(34,211,238,0.5);
+      max-width:900px;
+      margin-left:auto;
+      margin-right:auto;
+    }
+    .faq-q{
+      padding:1.8rem 2rem;
+      cursor:pointer;
+      font-size:1.25rem;
+      font-weight:700;
+      color:#e0f2fe;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      background:rgba(34,211,238,0.3);
+    }
+    .faq-q:hover{
+      background:rgba(34,211,238,0.45);
+    }
+    .faq-q i{
+      font-size:1.7rem;
+      color:#4ade80;
+      transition:0.5s;
+    }
+    .faq-a{
+      max-height:0;
+      overflow:hidden;
+      background:rgba(0,0,0,0.75);
+      transition:max-height 0.9s ease;
+      color:#cbd5e1;
+      line-height:1.8;
+      font-size:1.02rem;
+      padding:0 2rem;
+    }
+    .faq-a.active{
+      padding:1.5rem 2rem 1.8rem;
+      max-height:350px;
+    }
+
+    /* CTA */
+    .cta-btn{
+      display:inline-block;
+      padding:1.3rem 3.6rem;
+      font-size:clamp(1.7rem,4.5vw,2.6rem);
+      font-weight:700;
+      background:linear-gradient(90deg,#22d3ee,#4ade80);
+      color:black;
+      border-radius:999px;
+      box-shadow:0 20px 60px rgba(34,211,238,0.8);
+      transition:transform .25s,box-shadow .25s;
+    }
+    .cta-btn:hover{
+      transform:translateY(-6px) scale(1.02);
+      box-shadow:0 26px 80px rgba(45,212,191,1);
+    }
+
+    /* FOOTER */
+    footer{
+      background:rgba(0,0,0,0.98);
+      padding:4.5rem 5% 3.8rem;
+      text-align:center;
+      border-top:4px solid rgba(34,211,238,0.6);
+    }
+    .footer-title{
+      font-size:clamp(2.6rem,6.5vw,4.3rem);
+      margin-bottom:2.3rem;
+    }
+    .footer-icons{
+      display:flex;
+      justify-content:center;
+      gap:1.8rem;
+      font-size:2.4rem;
+      margin-bottom:1.8rem;
+      flex-wrap:wrap;
+    }
+    .footer-icons a{
+      color:#e5e7eb;
+      transition:0.25s;
+    }
+    .footer-icons a:hover{
+      transform:translateY(-3px) scale(1.05);
+    }
+    .footer-links{
+      font-size:0.98rem;
+      color:#94a3b8;
+      margin-top:0.5rem;
+    }
+    .footer-links a{
+      color:#94a3b8;
+      margin:0 0.6rem;
+      font-size:0.98rem;
+      transition:0.3s;
+    }
+    .footer-links a:hover{
+      color:#22d3ee;
+      text-decoration:underline;
+    }
+    .footer-love{
+      font-size:1.05rem;
+      color:#9ca3af;
+      margin-top:1.6rem;
+    }
+
+    /* RESPONSIVE TWEAKS */
     @media (max-width:768px){
       .burger{display:block !important;}
       .nav-links{display:none !important;}
-      .logo{font-size:2rem;}
-      header{padding:0.9rem 5%;}
-      .mobile-menu{top:68px;padding:1.8rem 5%;gap:1.6rem;font-size:1.4rem;}
-      .hero h1{font-size:5rem;letter-spacing:-5px;}
-      .calc-card{padding:4rem 5%;border-radius:2.8rem;}
-      .input-grid{gap:2rem;}
-      input[type=number]{font-size:1.2rem;padding:1.4rem;}
-      .btn{font-size:1.3rem;padding:1.3rem 3rem;}
-      .highlight-quote{padding:5rem 6%;border-radius:3.5rem;}
-      .crisis-card{padding:3.5rem 2rem;}
-      .beyond-text{font-size:5.5rem !important;}
-      .faq-heading{font-size:5rem !important;margin-bottom:3rem !important;}
-      .faq-q{font-size:1.4rem;padding:2.2rem 5%;}
-      .faq-a.active{padding:3.5rem 5%;font-size:1.3rem;}
-      .faq-q i{font-size:2rem;}
+      header{padding:0.8rem 5%;}
+      .logo{font-size:1.85rem;}
+
+      .hero{
+        padding-top:6rem;
+      }
+      .hero h1{
+        letter-spacing:-4px;
+      }
+
+      .calc-card{
+        padding:3.2rem 1.8rem;
+        border-radius:2.4rem;
+      }
+      .input-grid{
+        gap:1.8rem;
+      }
+      input[type=number]{
+        font-size:1.05rem;
+        padding:0.95rem 1.2rem;
+      }
+      .btn{
+        width:100%;
+        justify-content:center;
+      }
+      .btn-group{
+        display:flex;
+        flex-direction:column;
+        gap:1rem;
+        margin-top:2.4rem;
+      }
+      #breakdown{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+      }
+      .chart-container{
+        padding:1.3rem 0.2rem;
+      }
+
+      .highlight-quote{
+        padding:3rem 1.8rem;
+        border-radius:2.5rem;
+      }
+
+      .faq-q{
+        font-size:1.05rem;
+        padding:1.5rem 1.5rem;
+      }
+      .faq-a.active{
+        padding:1.2rem 1.5rem 1.4rem;
+        font-size:0.98rem;
+      }
+      .faq-q i{
+        font-size:1.5rem;
+      }
+
+      .cta-btn{
+        width:100%;
+      }
+
+      .footer-icons{
+        font-size:2.1rem;
+      }
+    }
+
+    @media (min-width:1024px){
+      .hero{
+        padding-top:7.5rem;
+      }
+      .calc-card{
+        padding:5rem 6%;
+      }
+      .results-wrapper{
+        margin-top:4.3rem;
+      }
     }
   </style>
 </head>
@@ -118,7 +561,7 @@
 
 <header>
   <div class="logo">CARBONCLARITY</div>
-  <nav class="nav-links hidden md:flex space-x-10">
+  <nav class="nav-links hidden md:flex space-x-8">
     <a href="#home">Home</a>
     <a href="#tool">Calculator</a>
     <a href="#content">Truth</a>
@@ -136,106 +579,206 @@
 
 <section class="hero" id="home">
   <h1>CARBON<br>CLARITY</h1>
-  <p class="mt-12 text-4xl md:text-6xl text-cyan-200 font-light">2025 — The Truth We Can't Ignore</p>
+  <p class="hero-sub">2025 — The Truth We Can't Ignore</p>
   <div class="glow-line"></div>
-  <p class="text-2xl md:text-4xl text-gray-300 max-w-5xl">This is not just a number.<br>This is our only home.</p>
+  <p class="hero-tag">This is not just a number. This is our only home.</p>
 </section>
 
 <section class="calc-section" id="tool">
   <div class="calc-card">
-    <h2 class="text-center text-6xl md:text-8xl font-black bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent mb-20">
+    <h2 class="calc-title text-center bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent font-black">
       Know Your Real Impact
     </h2>
+
     <form id="carbonForm" onsubmit="event.preventDefault(); calculateCarbon();">
       <div class="input-grid">
-        <div><label class="block mb-4 text-xl text-cyan-100">Electricity (kWh/month)</label><input type="number" id="electricity" value="300" min="0"/></div>
-        <div><label class="block mb-4 text-xl text-cyan-100">Car Travel (km/week)</label><input type="number" id="carKm" value="150" min="0"/></div>
-        <div><label class="block mb-4 text-xl text-cyan-100">Short Flights/year</label><input type="number" id="flights" value="2" min="0"/></div>
-        <div><label class="block mb-4 text-xl text-cyan-100">Waste (kg/week)</label><input type="number" id="waste" value="5" step="0.1"/></div>
-        <div><label class="block mb-4 text-xl text-cyan-100">Meat Meals/week</label><input type="number" id="meatMeals" value="7" min="0" max="21"/></div>
+        <div>
+          <label>Electricity (kWh/month)</label>
+          <input type="number" id="electricity" value="300" min="0"/>
+        </div>
+        <div>
+          <label>Car Travel (km/week)</label>
+          <input type="number" id="carKm" value="150" min="0"/>
+        </div>
+        <div>
+          <label>Short Flights/year</label>
+          <input type="number" id="flights" value="2" min="0"/>
+        </div>
+        <div>
+          <label>Waste (kg/week)</label>
+          <input type="number" id="waste" value="5" step="0.1"/>
+        </div>
+        <div>
+          <label>Meat Meals/week</label>
+          <input type="number" id="meatMeals" value="7" min="0" max="21"/>
+        </div>
       </div>
-      <div class="text-center mt-20 space-x-10">
+
+      <div class="text-center btn-group md:space-x-6 md:flex md:justify-center md:items-center md:mt-10">
         <button type="submit" class="btn">Calculate My Impact</button>
-        <button type="button" onclick="resetForm()" class="btn" style="background:linear-gradient(90deg,#f97316,#ef4444);">Reset</button>
+        <button type="button" onclick="resetForm()" class="btn btn-alt">Reset</button>
       </div>
     </form>
 
-    <div id="results" class="hidden text-center mt-32">
-      <h2 class="text-7xl md:text-9xl font-bold text-cyan-300 mb-16">Your Annual Footprint</h2>
-      <div id="totalEmission" class="text-8xl md:text-10xl font-black text-emerald-400 my-20">0.00 tons CO₂e</div>
-      <div id="breakdown" class="grid grid-cols-1 md:grid-cols-5 gap-12 my-32"></div>
-      <div class="my-32"><canvas id="barChart"></canvas></div>
-      <div class="my-32"><canvas id="pieChart"></canvas></div>
-      <div id="suggestions" class="my-32 text-2xl md:text-4xl text-cyan-200"></div>
+    <div id="results" class="results-wrapper hidden">
+      <h2 class="results-heading text-cyan-300 font-bold">Your Annual Footprint</h2>
+      <div id="totalEmission" class="total-emission">0.00 tons CO₂e</div>
+
+      <div id="breakdown"></div>
+
+      <div class="chart-container">
+        <canvas id="barChart"></canvas>
+      </div>
+
+      <div class="chart-container">
+        <canvas id="pieChart"></canvas>
+      </div>
+
+      <div id="suggestions"></div>
     </div>
   </div>
 </section>
 
 <section class="content-faq" id="content">
-  <div class="text-center my-32">
+  <div class="text-center">
     <div class="highlight-quote">
-      <p class="text-6xl md:text-9xl font-black leading-tight">
+      <p>
         <span class="bg-gradient-to-r from-pink-400 via-purple-500 to-cyan-400 bg-clip-text text-transparent">
-          Your choices today decide<br>whether your children<br>will breathe clean air<br>and drink clean water tomorrow.
+          Your choices today decide whether your children will breathe clean air and drink clean water tomorrow.
         </span>
       </p>
     </div>
   </div>
 
   <div class="crisis-grid">
-    <div class="crisis-card"><i class="fas fa-temperature-high text-6xl mb-6"></i><p class="text-4xl font-black text-orange-400">2024–2025</p><p class="text-2xl mt-4">Hottest years ever recorded</p></div>
-    <div class="crisis-card"><i class="fas fa-water text-6xl mb-6"></i><p class="text-4xl font-black text-cyan-400">1 in 4 people</p><p class="text-2xl mt-4">Affected by floods</p></div>
-    <div class="crisis-card"><i class="fas fa-tint text-6xl mb-6"></i><p class="text-4xl font-black text-purple-400">Sea level rising</p><p class="text-2xl mt-4">8–10 mm/year</p></div>
+    <div class="crisis-card">
+      <i class="fas fa-temperature-high text-5xl mb-4"></i>
+      <p class="text-3xl font-black text-orange-400">2024–2025</p>
+      <p class="text-xl mt-4">Hottest years ever recorded</p>
+    </div>
+    <div class="crisis-card">
+      <i class="fas fa-water text-5xl mb-4"></i>
+      <p class="text-3xl font-black text-cyan-400">1 in 4 people</p>
+      <p class="text-xl mt-4">Affected by floods</p>
+    </div>
+    <div class="crisis-card">
+      <i class="fas fa-tint text-5xl mb-4"></i>
+      <p class="text-3xl font-black text-purple-400">Sea level rising</p>
+      <p class="text-xl mt-4">8–10 mm/year</p>
+    </div>
   </div>
 
-  <div class="text-center my-32">
-    <p class="text-4xl md:text-6xl text-gray-200">Average person: <strong class="text-red-500">4–16 tons</strong> CO₂e/year</p>
-    <p class="text-4xl md:text-6xl text-gray-200">Earth can handle: <strong class="text-emerald-400">&lt;2 tons</strong></p>
-    <h2 class="beyond-text mt-20">We are living<br>8×<br>beyond<br>limits.</h2>
+  <div class="text-center my-10">
+    <p class="avg-text text-gray-200">
+      Average person: <strong class="text-red-500">4–16 tons</strong> CO₂e/year
+    </p>
+    <p class="avg-text text-gray-200">
+      Earth can handle: <strong class="text-emerald-400">&lt;2 tons</strong>
+    </p>
+    <h2 class="beyond-text">We are living 8× beyond limits.</h2>
   </div>
 
-  <h2 class="text-center text-7xl md:text-9xl font-black text-emerald-400 my-32">5 Actions That Heal Earth</h2>
-  <div class="grid grid-cols-2 md:grid-cols-5 gap-12 max-w-7xl mx-auto px-5">
-    <div class="bg-black/60 p-16 rounded-4xl text-center"><i class="fas fa-solar-panel text-7xl text-cyan-400 mb-6"></i><p class="text-3xl font-bold">Go Solar</p></div>
-    <div class="bg-black/60 p-16 rounded-4xl text-center"><i class="fas fa-car-bolt text-7xl text-emerald-400 mb-6"></i><p class="text-3xl font-bold">Drive EV</p></div>
-    <div class="bg-black/60 p-16 rounded-4xl text-center"><i class="fas fa-train text-7xl text-blue-400 mb-6"></i><p class="text-3xl font-bold">Take Trains</p></div>
-    <div class="bg-black/60 p-16 rounded-4xl text-center"><i class="fas fa-leaf text-7xl text-green-400 mb-6"></i><p class="text-3xl font-bold">Eat Plants</p></div>
-    <div class="bg-black/60 p-16 rounded-4xl text-center"><i class="fas fa-recycle text-7xl text-purple-400 mb-6"></i><p class="text-3xl font-bold">Zero Waste</p></div>
+  <h2 class="actions-title text-center text-emerald-400 font-black">5 Actions That Heal Earth</h2>
+  <div class="actions-grid">
+    <div class="action-card">
+      <i class="fas fa-solar-panel text-5xl text-cyan-400 mb-4"></i>
+      <p class="text-xl font-bold">Go Solar</p>
+    </div>
+    <div class="action-card">
+      <i class="fas fa-car-bolt text-5xl text-emerald-400 mb-4"></i>
+      <p class="text-xl font-bold">Drive EV</p>
+    </div>
+    <div class="action-card">
+      <i class="fas fa-train text-5xl text-blue-400 mb-4"></i>
+      <p class="text-xl font-bold">Take Trains</p>
+    </div>
+    <div class="action-card">
+      <i class="fas fa-leaf text-5xl text-green-400 mb-4"></i>
+      <p class="text-xl font-bold">Eat Plants</p>
+    </div>
+    <div class="action-card">
+      <i class="fas fa-recycle text-5xl text-purple-400 mb-4"></i>
+      <p class="text-xl font-bold">Zero Waste</p>
+    </div>
   </div>
 
-  <h2 id="faq" class="faq-heading text-center">Frequently<br>Asked<br>Questions</h2>
-  <div class="max-w-5xl mx-auto space-y-8">
-    <div class="faq-item"><div class="faq-q" onclick="toggleFAQ(this)"><span>How accurate is CarbonClarity?</span><i class="fas fa-chevron-down"></i></div><div class="faq-a">Uses 2025 global data from IPCC, IEA, UN — more accurate than 99% calculators.</div></div>
-    <div class="faq-item"><div class="faq-q" onclick="toggleFAQ(this)"><span>Why include diet?</span><i class="fas fa-chevron-down"></i></div><div class="faq-a">Livestock = 14.5% of global emissions. One meat-free day saves ~0.5 tons/year.</div></div>
-    <div class="faq-item"><div class="faq-q" onclick="toggleFAQ(this)"><span>Can one person make a difference?</span><i class="fas fa-chevron-down"></i></div><div class="faq-a">Yes. Cutting 5 tons = planting 250 trees = removing 20 cars.</div></div>
+  <h2 id="faq" class="faq-heading">Frequently Asked Questions</h2>
+  <div class="max-w-3xl mx-auto">
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFAQ(this)">
+        <span>How accurate is CarbonClarity?</span>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+      <div class="faq-a">
+        Uses 2025 global data from leading climate bodies and updated emission factors, making this more precise than most simple online calculators.
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFAQ(this)">
+        <span>Why include diet?</span>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+      <div class="faq-a">
+        Food choices, especially meat, drive a significant share of emissions, so including diet reveals a big hidden part of your personal footprint.
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFAQ(this)">
+        <span>Can one person make a difference?</span>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+      <div class="faq-a">
+        Individual cuts in energy, travel, and diet add up quickly and help push businesses and governments toward stronger climate action.
+      </div>
+    </div>
   </div>
 
-  <div class="text-center my-32">
-    <a href="#tool" class="inline-block px-32 py-14 text-5xl md:text-7xl font-bold bg-gradient-to-r from-cyan-400 to-emerald-400 text-black rounded-full shadow-2xl hover:scale-105 transition">
+  <div class="text-center my-12">
+    <a href="#tool" class="cta-btn">
       I Choose to Save Earth
     </a>
   </div>
 </section>
 
 <footer>
-  <h3 class="text-7xl md:text-8xl font-bold bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent mb-16">CarbonClarity</h3>
-  <div class="flex justify-center space-x-20 text-6xl mb-16">
-    <a href="https://x.com/Mukeshkr741" class="hover:text-cyan-300"><i class="fab fa-twitter"></i></a>
-    <a href="https://instagram.com/techinsight1x" class="hover:text-pink-300"><i class="fab fa-instagram"></i></a>
-    <a href="https://linkedin.com/in/mukesh-kumar-malakar" class="hover:text-blue-300"><i class="fab fa-linkedin"></i></a>
-    <a href="https://youtube.com/@techinsightsx" class="hover:text-red-300"><i class="fab fa-youtube"></i></a>
+  <h3 class="footer-title bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent font-bold">
+    CarbonClarity
+  </h3>
+  <div class="footer-icons">
+    <a href="https://x.com/Mukeshkr741" aria-label="Twitter / X">
+      <i class="fab fa-twitter"></i>
+    </a>
+    <a href="https://instagram.com/techinsight1x" aria-label="Instagram">
+      <i class="fab fa-instagram"></i>
+    </a>
+    <a href="https://linkedin.com/in/mukesh-kumar-malakar" aria-label="LinkedIn">
+      <i class="fab fa-linkedin"></i>
+    </a>
+    <a href="https://youtube.com/@techinsightsx" aria-label="YouTube">
+      <i class="fab fa-youtube"></i>
+    </a>
   </div>
   <div class="footer-links">
-    <a href="terms.html">Terms of Service</a> • <a href="privacy.html">Privacy Policy</a> • <a href="contact.html">Contact Us</a>
+    <a href="terms.html">Terms of Service</a> •
+    <a href="privacy.html">Privacy Policy</a> •
+    <a href="contact.html">Contact Us</a>
   </div>
-  <p class="text-3xl text-gray-400 mt-12">Made with <i class="fas fa-heart text-red-500"></i> for Earth</p>
+  <p class="footer-love">
+    Made with <i class="fas fa-heart text-red-500"></i> for Earth
+  </p>
 </footer>
 
 <script>
+  // Smooth scroll for in-page links
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
+      const targetId = this.getAttribute('href');
+      if (!targetId || targetId === '#') return;
       e.preventDefault();
-      document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+      const el = document.querySelector(targetId);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
       if (document.getElementById('mobileMenu').classList.contains('active')) {
         document.getElementById('mobileMenu').classList.remove('active');
         document.body.classList.remove('menu-open');
@@ -243,6 +786,7 @@
     });
   });
 
+  // Mobile menu toggle
   const burger = document.querySelector('.burger');
   const mobileMenu = document.getElementById('mobileMenu');
   burger.addEventListener('click', () => {
@@ -250,49 +794,156 @@
     document.body.classList.toggle('menu-open');
   });
 
-  const f = { electricity: 0.000233, car: 0.00021, flight: 0.15, waste: 0.031, meatMeal: 0.04 };
+  // Emission factors (tons CO2e per unit)
+  const f = {
+    electricity: 0.000233, // per kWh
+    car: 0.00021,          // per km
+    flight: 0.15,          // per short flight
+    waste: 0.031,          // per kg/week (annualized later)
+    meatMeal: 0.04         // per meat meal (weekly -> annual)
+  };
+
   let barChart, pieChart;
 
   function calculateCarbon() {
-    const e = +document.getElementById('electricity').value || 0;
-    const c = +document.getElementById('carKm').value || 0;
+    const e  = +document.getElementById('electricity').value || 0;
+    const c  = +document.getElementById('carKm').value || 0;
     const fl = +document.getElementById('flights').value || 0;
-    const w = +document.getElementById('waste').value || 0;
-    const m = +document.getElementById('meatMeals').value || 0;
+    const w  = +document.getElementById('waste').value || 0;
+    const m  = +document.getElementById('meatMeals').value || 0;
 
-    const elec = e * 12 * f.electricity;
-    const car = c * 52 * f.car;
+    const elec   = e  * 12 * f.electricity;
+    const car    = c  * 52 * f.car;
     const flight = fl * f.flight;
-    const waste = w * 52 * f.waste;
-    const meat = m * 52 * f.meatMeal;
-    const total = elec + car + flight + waste + meat;
+    const waste  = w  * 52 * f.waste;
+    const meat   = m  * 52 * f.meatMeal;
+    const total  = elec + car + flight + waste + meat;
 
-    document.getElementById('totalEmission').textContent = total.toFixed(2) + " tons CO₂e";
+    document.getElementById('totalEmission').textContent =
+      total.toFixed(2) + " tons CO₂e";
+
     document.getElementById('breakdown').innerHTML = `
-      <div class="bg-cyan-900/80 p-16 rounded-4xl text-center"><p class="text-3xl">Electricity</p><p class="text-6xl text-cyan-300 font-black mt-4">${elec.toFixed(2)} t</p></div>
-      <div class="bg-blue-900/80 p-16 rounded-4xl text-center"><p class="text-3xl">Car</p><p class="text-6xl text-blue-300 font-black mt-4">${car.toFixed(2)} t</p></div>
-      <div class="bg-yellow-900/80 p-16 rounded-4xl text-center"><p class="text-3xl">Flights</p><p class="text-6xl text-yellow-300 font-black mt-4">${flight.toFixed(2)} t</p></div>
-      <div class="bg-red-900/80 p-16 rounded-4xl text-center"><p class="text-3xl">Waste</p><p class="text-6xl text-red-300 font-black mt-4">${waste.toFixed(2)} t</p></div>
-      <div class="bg-purple-900/80 p-16 rounded-4xl text-center"><p class="text-3xl">Diet</p><p class="text-6xl text-purple-300 font-black mt-4">${meat.toFixed(2)} t</p></div>
+      <div class="box bg-cyan-900/80">
+        <p class="box-title">Electricity</p>
+        <p class="box-value text-cyan-300 font-black">${elec.toFixed(2)} t</p>
+      </div>
+      <div class="box bg-blue-900/80">
+        <p class="box-title">Car</p>
+        <p class="box-value text-blue-300 font-black">${car.toFixed(2)} t</p>
+      </div>
+      <div class="box bg-yellow-900/80">
+        <p class="box-title">Flights</p>
+        <p class="box-value text-yellow-300 font-black">${flight.toFixed(2)} t</p>
+      </div>
+      <div class="box bg-red-900/80">
+        <p class="box-title">Waste</p>
+        <p class="box-value text-red-300 font-black">${waste.toFixed(2)} t</p>
+      </div>
+      <div class="box bg-purple-900/80">
+        <p class="box-title">Diet</p>
+        <p class="box-value text-purple-300 font-black">${meat.toFixed(2)} t</p>
+      </div>
     `;
 
     const labels = ['Electricity','Car','Flights','Waste','Diet'];
-    const data = [elec, car, flight, waste, meat];
+    const data   = [elec, car, flight, waste, meat];
     const colors = ['#34D399','#60A5FA','#FBBF24','#F87171','#C084FC'];
 
     if (barChart) barChart.destroy();
     if (pieChart) pieChart.destroy();
 
-    barChart = new Chart(document.getElementById('barChart'), { type: 'bar', data: { labels, datasets: [{ data, backgroundColor: colors, borderRadius: 20 }] }, options: { responsive: true, plugins: { legend: { display: false } } } });
-    pieChart = new Chart(document.getElementById('pieChart'), { type: 'doughnut', data: { labels, datasets: [{ data, backgroundColor: colors, borderWidth: 20, borderColor: '#020617' }] }, options: { responsive: true } });
+    const barCtx = document.getElementById('barChart').getContext('2d');
+    const pieCtx = document.getElementById('pieChart').getContext('2d');
 
-    document.getElementById('results').classList.remove('hidden');
-    document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+    barChart = new Chart(barCtx, {
+      type: 'bar',
+      data: {
+        labels,
+        datasets: [{
+          data,
+          backgroundColor: colors,
+          borderRadius: 18
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: ctx => `${ctx.parsed.y.toFixed(2)} t CO₂e`
+            }
+          }
+        },
+        scales: {
+          x: {
+            ticks: { color: '#e5e7eb' },
+            grid: { display:false }
+          },
+          y: {
+            ticks: { color: '#e5e7eb' },
+            grid: { color:'rgba(148,163,184,0.2)' }
+          }
+        }
+      }
+    });
+
+    pieChart = new Chart(pieCtx, {
+      type: 'doughnut',
+      data: {
+        labels,
+        datasets: [{
+          data,
+          backgroundColor: colors,
+          borderWidth:18,
+          borderColor:'#020617'
+        }]
+      },
+      options: {
+        responsive:true,
+        maintainAspectRatio:false,
+        plugins:{
+          legend:{
+            position:'bottom',
+            labels:{ color:'#e5e7eb' }
+          },
+          tooltip:{
+            callbacks:{
+              label: ctx => {
+                const v = ctx.parsed;
+                const p = total > 0 ? (v/total*100).toFixed(1) : 0;
+                return `${ctx.label}: ${v.toFixed(2)} t (${p}%)`;
+              }
+            }
+          }
+        },
+        cutout:'60%'
+      }
+    });
+
+    const suggestions = document.getElementById('suggestions');
+    let msg = '';
+    if (total <= 2) {
+      msg = "Your footprint is within the planet’s safe limit. Share your habits and inspire others.";
+    } else if (total <= 6) {
+      msg = "You are close to a sustainable level. A few strong changes in energy, travel, or diet can push you under 2 tons.";
+    } else {
+      msg = "Your footprint is much higher than Earth’s safe limit. Start with one bold change this month: solar, EV, trains, or more plant-based meals.";
+    }
+    suggestions.textContent = msg;
+
+    const resultsEl = document.getElementById('results');
+    resultsEl.classList.remove('hidden');
+    resultsEl.scrollIntoView({ behavior: 'smooth' });
   }
 
   function resetForm() {
     document.getElementById('carbonForm').reset();
     document.getElementById('results').classList.add('hidden');
+    document.getElementById('totalEmission').textContent = "0.00 tons CO₂e";
+    document.getElementById('breakdown').innerHTML = "";
+    document.getElementById('suggestions').textContent = "";
     if (barChart) barChart.destroy();
     if (pieChart) pieChart.destroy();
   }
@@ -303,7 +954,7 @@
     ans.classList.toggle('active');
     icon.classList.toggle('fa-chevron-down');
     icon.classList.toggle('fa-chevron-up');
-    ans.style.maxHeight = ans.classList.contains('active') ? ans.scrollHeight + 100 + 'px' : '0';
+    ans.style.maxHeight = ans.classList.contains('active') ? ans.scrollHeight + 50 + 'px' : '0';
   }
 </script>
 </body>
